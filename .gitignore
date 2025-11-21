@@ -1,2 +1,4 @@
 .Rproj.user
 pkg.lock
+*.DS_Store
+.DS_Store
