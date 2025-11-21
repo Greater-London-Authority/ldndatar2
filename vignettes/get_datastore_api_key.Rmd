@@ -1,0 +1,20 @@
+---
+title: "get_datastore_api_key"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{get_datastore_api_key}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ldndatar2)
+```
+# How to get your API key from the London Datastore
