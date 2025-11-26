@@ -7,10 +7,11 @@
 #' @import pkg
 #' @import pkg
 #' @importFrom checkmate assert_choice
+#' @importFrom glue glue
 #' @export
 lds_meta_data <- function(type = "resources") {
   checkmate::assert_choice(type, c("resources", "orgs", "datasets", "topics"))
-
-
+  user_selection <- type
+  glue::glue("The user has selected: {user_selection}")
 
 }
