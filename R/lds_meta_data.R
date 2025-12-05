@@ -21,22 +21,21 @@ lds_meta_data <- function(type = "resources") {
 
 #' @title fetch_tabular_metadata
 #' @noRd
-#' @description Fetch resources and datasets
+#' @description Fetch resources and datasets metadata
 #'
-#'
-#' @param type <character>
-#' @example example_function()
-#' @import dplyr glue lubridate purrr readr tidyselect stringr
-#' @import pkg
+#' @param type A character
+#' @import checkmate glue dplyr lubridate janitor
 #' @importFrom checkmate assert_choice
 #' @importFrom glue glue
+#' @importFrom dplyr mutate across contains
+#' @importFrom lubridate ymd_hms ym
+#' @importFrom janitor clean_names
 fetch_tabular_metadata <- function(type) {
   checkmate::assert_choice(type, c("resources", "datasets"))
 
   meta_data_url <- glue::glue("{lds_url_api}datasets/export.{type}.csv")
 
-  # TODO do we need to clean the col names? It looks pretty clean now
-  # Maybe add checks instead???
+  # Parse date columns for resources / datasets
   meta_data <- readr::read_csv(meta_data_url, show_col_types = FALSE) |>
     dplyr::mutate(
       dplyr::across(

@@ -1,7 +1,21 @@
 install.packages("pak")
 install.packages("pkgdepends")
 
-pak::lockfile_create(c("usethis", "here", "testthat", "checkmate", "devtools", "glue"), upgrade = FALSE, dependencies = NA, lockfile = "pkg.lock")
+pak::lockfile_create(
+  c(
+    "usethis",
+    "here",
+    "testthat",
+    "checkmate",
+    "devtools",
+    "glue",
+    "janitor",
+    "lubridate"
+  ),
+  upgrade = FALSE,
+  dependencies = NA,
+  lockfile = "pkg.lock"
+)
 pak::lockfile_install(lockfile = "pkg.lock")
 
 # TODO: comment it out later
