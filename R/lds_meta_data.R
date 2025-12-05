@@ -37,12 +37,13 @@ fetch_tabular_metadata <- function(type) {
 
   # TODO do we need to clean the col names? It looks pretty clean now
   # Maybe add checks instead???
-  # Look at JANITOR snake case
   meta_data <- readr::read_csv(meta_data_url, show_col_types = FALSE) |>
-    dplyr::mutate(dplyr::across(
-      c(tidyselect::ends_with("At", ignore.case = FALSE)),
-      lubridate::ymd_hms
-    )) |>
+    dplyr::mutate(
+      dplyr::across(
+        tidyselect::ends_with("At", ignore.case = FALSE),
+        ~ lubridate::ymd_hms(.x, quiet = TRUE)
+      )
+    ) |>
     janitor::clean_names(case = "snake")
 
   return(meta_data)
