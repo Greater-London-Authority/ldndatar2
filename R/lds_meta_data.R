@@ -40,8 +40,14 @@ fetch_tabular_metadata <- function(type) {
   meta_data <- readr::read_csv(meta_data_url, show_col_types = FALSE) |>
     dplyr::mutate(
       dplyr::across(
-        tidyselect::ends_with("At", ignore.case = FALSE),
+        dplyr::contains(c("At", "time"), ignore.case = FALSE),
         ~ lubridate::ymd_hms(.x, quiet = TRUE)
+      )
+    ) |>
+    dplyr::mutate(
+      dplyr::across(
+        dplyr::contains("temporal", ignore.case = FALSE),
+        ~ lubridate::ym(.x, quiet = TRUE)
       )
     ) |>
     janitor::clean_names(case = "snake")
