@@ -14,8 +14,6 @@ lds_meta_data <- function(type = "resources") {
 
   if (type %in% c("resources", "datasets")) {
     fetch_tabular_metadata(type)
-  } else {
-    fetch_org_metadata(type)
   }
 }
 
