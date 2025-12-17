@@ -10,7 +10,7 @@
 #' @importFrom glue glue
 #' @export
 lds_meta_data <- function(type = "resources") {
-  checkmate::assert_choice(type, c("resources", "datasets", "orgs", "topics"))
+  checkmate::assert_choice(type, c("resources", "datasets"))
 
   if (type %in% c("resources", "datasets")) {
     fetch_tabular_metadata(type)
