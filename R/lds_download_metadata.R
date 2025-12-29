@@ -1,18 +1,16 @@
 #' @title lds_download_metadata
-#' @description Adapted from the ldndatar pkg. This updated function downloads the metadata of a given page slug. i.e. will let you know metadata about given page on the London Datastore.
-#' @param slug a URL slug of the dataset - https://data.london.gov.uk/dataset/<slug>
-#' @param api_key London Datastore API key, only needed for private datasets, Default: NULL
+#'
+#' @description
+#' Adapted from the original ldndatar pkg.
+#' This updated function downloads the metadata of a given page slug.
+#' i.e. will let you know the metadata about a given page on the London Datastore.
+#'
+#' @param slug a URL slug of the dataset - https://data.london.gov.uk/dataset/slug
+#' @param api_key London Datastore API key, needed for private datasets, Default: NULL
 #' @param inc_tables whether to include data on any tables in the dataset, Default: FALSE
 #' @return A tibble of metadata
 #' @export
 #' @rdname lds2_meta_dataset
-#' @import httr
-#' @import checkmate
-#' @import dplyr
-#' @import tibble
-#' @importFrom lubridate ymd_hms
-#' @importFrom glue glue
-#'
 lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   # Checkmate type checks
   checkmate::assert_string(slug)

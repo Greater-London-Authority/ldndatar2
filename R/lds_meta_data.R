@@ -22,7 +22,6 @@ lds_meta_data <- function(type = "resources") {
 #' @description Fetch resources and datasets metadata
 #'
 #' @param type A character
-#' @import checkmate glue dplyr lubridate janitor
 #' @importFrom checkmate assert_choice
 #' @importFrom glue glue
 #' @importFrom dplyr mutate across contains
