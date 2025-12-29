@@ -19,7 +19,6 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   checkmate::assert_string(api_key, null.ok = TRUE)
   checkmate::assert_logical(inc_tables)
 
-  # dataset_url <- glue::glue("{lds_url_api}dataset/{slug}")
   dataset_url <- glue::glue("https://data.london.gov.uk/api/dataset/{slug}")
 
   if (is.null(api_key)) {
@@ -45,14 +44,37 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   } else if (httr2::resp_status(response) == 404) {
     stop("This dataset does not exist.")
   }
-  print(str(content))
 
-  #### Resources, Readonly
-  # The number of rows are defined by the number of resources. User defined option? Full metadata (json flat)?? Core?!
   resources <- purrr::pluck(content, "resources")
-  readonly <- purrr::pluck(content, "readonly")
 
-  return(resources)
+  base_meta <- content |>
+    purrr::discard_at(c("resources", "readonly")) |>
+    purrr::modify_at(c("tags", "topics"), \(x) paste(x)) |>
+    purrr::list_flatten(name_spec = "{outer}_{inner}") |>
+    purrr::compact() |>
+    tibble::as_tibble_row()
+
+  resources_df <- resources |>
+    purrr::imap(\(res, res_id) {
+      res |>
+        purrr::discard_at("tables") |>
+        purrr::list_flatten(name_spec = "{outer}_{inner}") |>
+        purrr::compact() |>
+        tibble::as_tibble_row() |>
+        dplyr::mutate(resource_id = res_id, .before = 1)
+    }) |>
+    purrr::list_rbind()
+
+  common_cols <- intersect(names(base_meta), names(resources_df))
+
+  meta_data <- dplyr::cross_join(
+    base_meta,
+    resources_df |>
+      dplyr::rename_with(
+        \(x) paste0("resource_", x),
+        dplyr::all_of(common_cols)
+      )
+  )
+
+  return(meta_data)
 }
-
-lds_download_metadata("raising-children-in-london-polling-e1rkk")
