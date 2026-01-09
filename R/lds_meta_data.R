@@ -10,12 +10,10 @@
 #' @importFrom glue glue
 #' @export
 lds_meta_data <- function(type = "resources") {
-  checkmate::assert_choice(type, c("resources", "datasets", "orgs", "topics"))
+  checkmate::assert_choice(type, c("resources", "datasets"))
 
   if (type %in% c("resources", "datasets")) {
     fetch_tabular_metadata(type)
-  } else {
-    fetch_org_metadata(type)
   }
 }
 
@@ -24,7 +22,6 @@ lds_meta_data <- function(type = "resources") {
 #' @description Fetch resources and datasets metadata
 #'
 #' @param type A character
-#' @import checkmate glue dplyr lubridate janitor
 #' @importFrom checkmate assert_choice
 #' @importFrom glue glue
 #' @importFrom dplyr mutate across contains
