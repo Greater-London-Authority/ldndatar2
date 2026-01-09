@@ -17,7 +17,7 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   checkmate::assert_string(api_key, null.ok = TRUE)
   checkmate::assert_logical(inc_tables)
 
-  dataset_url <- glue::glue("https://data.london.gov.uk/api/dataset/{slug}")
+  dataset_url <- glue::glue("{lds_url_api}dataset/{slug}")
 
   if (is.null(api_key)) {
     response <- dataset_url |>
