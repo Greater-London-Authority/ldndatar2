@@ -17,62 +17,149 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   checkmate::assert_string(api_key, null.ok = TRUE)
   checkmate::assert_logical(inc_tables)
 
-  dataset_url <- glue::glue("{lds_url_api}dataset/{slug}")
+  dataset_url <- glue::glue("https://data.london.gov.uk/api/dataset/{slug}")
 
   if (is.null(api_key)) {
     response <- dataset_url |>
-      httr2::request() |>
-      httr2::req_perform()
+      httr::GET()
   } else {
     response <- dataset_url |>
-      httr2::request() |>
-      httr2::req_headers(Authorization = api_key) |>
-      httr2::req_perform()
+      httr::GET(config = httr::add_headers(Authorization = api_key))
   }
 
-  if (httr2::resp_status(response) == 200) {
-    # returns a list
-    content <- httr2::resp_body_json(response)
-  } else if (httr2::resp_status(response) == 403) {
+  if (response$status_code == 200) {
+    content <- httr::content(response)
+  } else if (response$status_code == 403) {
     if (is.null(api_key)) {
-      stop("This is a private dataset, please provide an API key.")
+      stop("This is a private dataset, please provide an API key")
     } else {
-      stop("You do not have permission to see this dataset.")
+      stop("You do not have permission to see this dataset")
     }
-  } else if (httr2::resp_status(response) == 404) {
-    stop("This dataset does not exist.")
+  } else if (response$status_code == 404) {
+    stop("This dataset does not exist")
+  }
+  httr::stop_for_status(response)
+
+  for (sublist in c("resources", "shares", "readonly")) {
+    assign(sublist, content[[sublist]])
+    content[sublist] <- NULL
   }
 
-  resources <- purrr::pluck(content, "resources")
+  for (sublist in c("tags", "topics")) {
+    content[sublist] <- paste(content[[sublist]], collapse = ", ")
+  }
 
-  base_meta <- content |>
-    purrr::discard_at(c("resources", "readonly")) |>
-    purrr::modify_at(c("tags", "topics"), \(x) paste(x)) |>
-    purrr::list_flatten(name_spec = "{outer}_{inner}") |>
-    purrr::compact() |>
-    tibble::as_tibble_row()
+  for (item in names(content)) {
+    if (is.null(content[[item]])) {
+      content[[item]] <- NULL
+    }
+  }
+  content <- purrr::list_flatten(content)
 
-  resources_df <- resources |>
-    purrr::imap(\(res, res_id) {
-      res |>
-        purrr::discard_at("tables") |>
-        purrr::list_flatten(name_spec = "{outer}_{inner}") |>
-        purrr::compact() |>
-        tibble::as_tibble_row() |>
-        dplyr::mutate(resource_id = res_id, .before = 1)
-    }) |>
-    purrr::list_rbind()
+  meta_data <- content |>
+    as.data.frame(stringsAsFactors = FALSE) |>
+    dplyr::mutate(join = 1)
 
-  common_cols <- intersect(names(base_meta), names(resources_df))
+  resources_df <- data.frame()
+  tables <- list()
+  if (length(resources) > 0) {
+    resource_ids <- names(resources)
 
-  meta_data <- dplyr::cross_join(
-    base_meta,
-    resources_df |>
-      dplyr::rename_with(
-        \(x) paste0("resource_", x),
-        dplyr::all_of(common_cols)
-      )
-  )
+    for (res in resource_ids) {
+      resources[[res]] <- remove_null_list(resources[[res]])
+      if ("tables" %in% names(resources[[res]])) {
+        tables[res] <- resources[[res]]["tables"]
+        resources[[res]][["tables"]] <- NULL
+      }
+      resources_df <- resources[[res]] |>
+        as.data.frame(stringsAsFactors = FALSE) |>
+        dplyr::mutate(resource_id = res) |>
+        dplyr::bind_rows(resources_df)
+    }
 
-  return(meta_data)
+    common_columns <- base::intersect(
+      names(meta_data),
+      names(resources_df)
+    )
+
+    for (column in common_columns) {
+      resources_df <- resources_df |>
+        stats::setNames(
+          gsub(
+            paste0("^", column, "$"),
+            paste0("resource_", column),
+            names(resources_df)
+          )
+        )
+    }
+
+    resources_df <- resources_df |>
+      dplyr::mutate(join = 1)
+
+    meta_data <- dplyr::full_join(meta_data, resources_df, by = "join")
+  }
+
+  ######  Build the meta data dataframe.
+
+  meta_data <- meta_data |>
+    dplyr::select(-join) |>
+    dplyr::mutate_if(
+      is.character,
+      ~ ifelse(. == "" | . == "null" | . == "[]", NA, .)
+    ) |>
+    dplyr::mutate_at(
+      dplyr::vars(
+        dplyr::ends_with("At", ignore.case = FALSE),
+        dplyr::contains("time")
+      ),
+      lubridate::ymd_hms
+    ) |>
+    dplyr::mutate_at(
+      dplyr::vars(dplyr::matches("^check_http_status$|^check_size$|^order$")),
+      as.integer
+    )
+  if (inc_tables) {
+    tables_df <- data.frame()
+    for (res in names(tables)) {
+      for (tab in names(tables[[res]])) {
+        table_df <- data.frame(
+          list(
+            resource_id = res,
+            table_id = tab,
+            table_title = tables[[res]][[tab]]$title
+          ),
+          stringsAsFactors = FALSE
+        )
+        tables_df <- tables_df |>
+          dplyr::bind_rows(table_df)
+      }
+    }
+    if (nrow(tables_df) > 0) {
+      meta_data <- dplyr::full_join(meta_data, tables_df, by = "resource_id")
+    }
+  }
+
+  return(dplyr::as_tibble(meta_data))
+}
+
+### Utility functions for the lds_metadatset function.
+
+#' @importFrom rlang is_empty
+remove_null_list <- function(l) {
+  for (item in names(l)) {
+    if (is.null(l[[item]]) || rlang::is_empty(l[[item]])) {
+      l[[item]] <- NULL
+    }
+  }
+  return(l)
+}
+
+
+remove_na_list <- function(l) {
+  for (item in names(l)) {
+    if (is.na(l[[item]])) {
+      l[[item]] <- NULL
+    }
+  }
+  return(l)
 }
