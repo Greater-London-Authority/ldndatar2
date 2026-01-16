@@ -1,3 +1,7 @@
+# R files
 pkg.lock
 .Rproj.user
 inst/doc
+
+# Mac file
+.DS_Store
