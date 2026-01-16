@@ -1,25 +1,22 @@
-#' @title lds2_resource_url
-#' @description Retrieves the URL for a specified resource in a dataset from the London Datastore.
-#' This function is dependent on the ld2_download_metadata() function
+#' @title lds_download_resource
+#' @description Downloads resource using URL for a specified resource.
+#' This function replaces the `lds_resource_url` from the original `ldndatar` package.
+#' Because of new authentical we need to download the file after request.
 #' @param slug A URL slug of the dataset - https://data.london.gov.uk/dataset/<slug>
+#' @param dir Where to save the output. Default: current working directory
 #' @param res_title The title of the resource, Default: NULL
 #' @param res_id The ID of the resource, Default: NULL
 #' @param api_key London Datastore API key, only needed for private datasets, Default: NULL
 #' @return A URL string of the resource
 #' @export
-#' @import checkmate
-#' @import dplyr
-#' @import stringr
-#' @import httr
-#' @import tibble
-#' @importFrom glue glue
-lds_resource_url <- function(
+lds_download_resource <- function(
   slug,
+  dir = getwd(),
   res_title = NULL,
   res_id = NULL,
   api_key = NULL
 ) {
-  # Checks
+  # Input validation
   checkmate::assert_string(slug)
   checkmate::assert_string(res_title, null.ok = TRUE)
   checkmate::assert_string(res_id, null.ok = TRUE)
@@ -54,15 +51,16 @@ lds_resource_url <- function(
     res_id <- res_data$resource_id
   }
   file <- stringr::str_extract(res_data$url, "[^/]+$")
+  path <- file.path(dir, file)
 
   url <- glue::glue("{lds_url}/download/{slug}/{res_id}/{file}")
+  req <- url |>
+    httr2::request()
 
-  # For private datasets, follow the redirect
   if (private_dataset) {
-    response <- httr::GET(
-      url,
-      config = httr::add_headers(Authorization = api_key)
-    )
-    return(httr::content(response, as = "text"))
+    req <- httr2::req_headers(Authorization = api_key)
   }
+
+  httr2::req_perform(req, path = path)
+  return(invisible(path))
 }
