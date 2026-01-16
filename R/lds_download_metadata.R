@@ -17,28 +17,30 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   checkmate::assert_string(api_key, null.ok = TRUE)
   checkmate::assert_logical(inc_tables)
 
-  dataset_url <- glue::glue("https://data.london.gov.uk/api/dataset/{slug}")
+  dataset_url <- glue::glue("{lds_url_api}dataset/{slug}")
 
-  if (is.null(api_key)) {
-    response <- dataset_url |>
-      httr::GET()
-  } else {
-    response <- dataset_url |>
-      httr::GET(config = httr::add_headers(Authorization = api_key))
+  req <- httr2::request(dataset_url)
+
+  if (!is.null(api_key)) {
+    req <- req |>
+      httr2::req_headers(Authorization = api_key)
   }
 
-  if (response$status_code == 200) {
-    content <- httr::content(response)
-  } else if (response$status_code == 403) {
+  response <- httr2::req_perform(req)
+
+  resp_status <- httr2::resp_status(response)
+
+  if (resp_status == 200) {
+    content <- httr2::resp_body_json(response)
+  } else if (resp_status == 403) {
     if (is.null(api_key)) {
       stop("This is a private dataset, please provide an API key")
     } else {
       stop("You do not have permission to see this dataset")
     }
-  } else if (response$status_code == 404) {
+  } else if (resp_status == 404) {
     stop("This dataset does not exist")
   }
-  httr::stop_for_status(response)
 
   for (sublist in c("resources", "shares", "readonly")) {
     assign(sublist, content[[sublist]])
@@ -144,7 +146,6 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
 
 ### Utility functions for the lds_metadatset function.
 
-#' @importFrom rlang is_empty
 remove_null_list <- function(l) {
   for (item in names(l)) {
     if (is.null(l[[item]]) || rlang::is_empty(l[[item]])) {

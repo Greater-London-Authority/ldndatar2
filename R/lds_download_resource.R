@@ -53,14 +53,15 @@ lds_download_resource <- function(
   file <- stringr::str_extract(res_data$url, "[^/]+$")
   path <- file.path(dir, file)
 
-  url <- glue::glue("{lds_url}/download/{slug}/{res_id}/{file}")
-  req <- url |>
-    httr2::request()
+  dataset_url <- glue::glue("{lds_url}/download/{slug}/{res_id}/{file}")
+  req <- httr2::request(dataset_url)
 
   if (private_dataset) {
-    req <- httr2::req_headers(Authorization = api_key)
+    req <- req |>
+      httr2::req_headers(Authorization = api_key)
   }
 
   httr2::req_perform(req, path = path)
+
   return(invisible(path))
 }
