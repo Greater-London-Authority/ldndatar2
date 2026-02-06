@@ -1,20 +1,38 @@
 Package: ldndatar2
-Title: What the Package Does (One Line, Title Case)
+Title: Access London Datastore Data and Resources
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
-Suggests: 
+Authors@R: c(
+    person("Micheal", "Slade", , "micheal.slade@london.gov.uk", role = c("aut", "cre")),
+    person("Izabel", "Bahia", , "Izabel.Bahia@london.gov.uk", role = c("aut", "cre"))
+    )
+Description: Provides functions to access and download data, metadata,
+    and resources from the London Datastore
+    (<https://data.london.gov.uk>). This package is an updated successor
+    to the original 'ldndatar' package, utilising the current London
+    Datastore API. It allows users to programmatically catalogue, query,
+    and retrieve datasets published by the Greater London Authority and
+    partner organisations.
+License: MIT + file LICENSE
+URL: https://github.com/Greater-London-Authority/ldndatar2
+BugReports: https://github.com/Greater-London-Authority/ldndatar2/issues
+Depends:
+    R (>= 3.5)
+Imports:
+    checkmate,
+    dplyr,
+    glue,
+    httr2,
+    janitor,
+    lubridate,
+    purrr,
+    readr,
+    rlang,
+    stringr
+Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-Depends: 
-    R (>= 3.5)
-Imports: 
-    checkmate,
-    glue
+Encoding: UTF-8
+Language: en-GB
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
