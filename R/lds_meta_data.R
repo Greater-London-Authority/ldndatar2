@@ -3,9 +3,6 @@
 #'
 #'
 #' @param type <character> The type of meta data to be returned "resources", "orgs", "datasets" or "topics"
-#' @example example_function()
-#' @import dplyr glue lubridate purrr readr tidyselect stringr
-#' @import pkg
 #' @importFrom checkmate assert_choice
 #' @importFrom glue glue
 #' @export

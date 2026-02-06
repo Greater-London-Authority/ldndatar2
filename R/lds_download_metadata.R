@@ -11,6 +11,7 @@
 #' @return A tibble of metadata
 #' @export
 #' @rdname lds2_meta_dataset
+#' @importFrom rlang .data
 lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   # Checkmate type checks
   checkmate::assert_string(slug)
@@ -104,7 +105,7 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   ######  Build the meta data dataframe.
 
   meta_data <- meta_data |>
-    dplyr::select(-join) |>
+    dplyr::select(-.data$join) |>
     dplyr::mutate_if(
       is.character,
       ~ ifelse(. == "" | . == "null" | . == "[]", NA, .)

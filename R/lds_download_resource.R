@@ -9,6 +9,7 @@
 #' @param api_key London Datastore API key, only needed for private datasets, Default: NULL
 #' @return A URL string of the resource
 #' @export
+#' @importFrom rlang .data
 lds_download_resource <- function(
   slug,
   dir = getwd(),
@@ -28,16 +29,16 @@ lds_download_resource <- function(
 
   # Filter metadata based on res_title and res_id
   res_data <- meta_data |>
-    dplyr::arrange(order) |>
+    dplyr::arrange(.data$order) |>
     (\(df) {
       if (!is.null(res_title)) {
-        dplyr::filter(df, resource_title == res_title)
+        dplyr::filter(df, .data$resource_title == res_title)
       } else {
         df
       }
     })() |>
     (\(df) {
-      if (!is.null(res_id)) dplyr::filter(df, resource_id == res_id) else df
+      if (!is.null(res_id)) dplyr::filter(df, .data$resource_id == res_id) else df
     })() |>
     dplyr::slice_head(n = 1)
 

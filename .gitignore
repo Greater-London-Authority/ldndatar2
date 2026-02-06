@@ -2,6 +2,13 @@
 pkg.lock
 .Rproj.user
 inst/doc
+.Rhistory
+.RData
+.Ruserdata
+*.Rcheck/
+*.tar.gz
+vignettes/*.html
+vignettes/*.R
 
-# Mac file
+# Mac files
 .DS_Store
