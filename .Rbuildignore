@@ -7,3 +7,4 @@
 ^README\.md$
 ^LICENSE\.md$
 ^\.lintr$
+^dev-init\.R$

@@ -16,9 +16,10 @@ License: MIT + file LICENSE
 URL: https://github.com/Greater-London-Authority/ldndatar2
 BugReports: https://github.com/Greater-London-Authority/ldndatar2/issues
 Depends:
-    R (>= 3.5)
+    R (>= 4.1.0)
 Imports:
     checkmate,
+    curl,
     dplyr,
     glue,
     httr2,
@@ -30,9 +31,12 @@ Imports:
     stringr
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0),
+    withr
 VignetteBuilder: knitr
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Config/testthat/edition: 3
