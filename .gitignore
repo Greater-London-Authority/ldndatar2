@@ -12,3 +12,11 @@ vignettes/*.R
 
 # Mac files
 .DS_Store
+
+# Output files
+*.Rmd
+*.md
+*.html
+*.csv
+*.pdf
+datastore_description_files/*
