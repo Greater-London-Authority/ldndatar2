@@ -3,14 +3,17 @@ install.packages("pkgdepends")
 
 pak::lockfile_create(
   c(
-    "usethis",
-    "here",
-    "testthat",
     "checkmate",
     "devtools",
     "glue",
+    "here",
     "janitor",
-    "lubridate"
+    "lubridate",
+    "markdown",
+    "rmarkdown",
+    "stringr",
+    "testthat",
+    "usethis",
   ),
   upgrade = FALSE,
   dependencies = NA,
