@@ -45,8 +45,7 @@ lds_description_render <- function(
   input_dir <- dirname(input)
 
   if (is.null(output_file)) {
-    output_file <- input_file |>
-      gsub("\\.[a-zA-Z]+$", "", .)
+    output_file <- stringr::str_replace(input_file, "\\.[a-zA-Z]+$", "")
   }
   if (is.null(output_dir)) {
     output_dir <- input_dir
@@ -57,18 +56,19 @@ lds_description_render <- function(
     # Extract title from Rmd
     rmd_text <- readLines(input)
     rmd_title <- rmd_text[grepl("^title:", rmd_text)] |>
-      gsub("title: ", "", .) |>
-      gsub('\\"', "", .) |>
-      stringr::str_split(., "`") |>
+      stringr::str_replace("title: ", "") |>
+      stringr::str_replace_all('\\\\"|"|"', "") |>
+      stringr::str_split("`") |>
       unlist()
+
     rmd_title <- rmd_title[rmd_title != ""]
     # Execute any inline R
     for (i in seq_len(length(rmd_title))) {
       if (grepl("^r ", rmd_title[i])) {
         rmd_title[i] <- rmd_title[i] |>
-          gsub("r ", "", .) |>
-          parse(text = .) |>
-          eval(.)
+          stringr::str_replace("r ", "") |>
+          parse(text = _) |>
+          eval()
       }
     }
     rmd_title <- paste(rmd_title, collapse = "")
@@ -85,21 +85,22 @@ lds_description_render <- function(
   # These may need to be added to
   html <- html |>
     # Change " to ' to make string valid
-    gsub('\\"|“|”|’|\\\\&quot;', "'", .) |>
     # Remove any em/en dashes
-    gsub("\u2013", "-", ., fixed = TRUE) |>
-    gsub("\u2014", "-", ., fixed = TRUE) |>
-    gsub("\u00A0", " ", ., fixed = TRUE) |>
-    gsub("\\_", "_", ., fixed = TRUE) |>
-    gsub("\\[", "[", ., fixed = TRUE) |>
-    gsub("\\]", "]", ., fixed = TRUE) |>
-    gsub("… ", "... ", ., fixed = TRUE)
+    stringr::str_replace_all('\\"|“|”|’|\\\\&quot;', "'") |>
+
+    stringr::str_replace_all("\u2013", "-") |>
+    stringr::str_replace_all("\u2014", "-") |>
+    stringr::str_replace_all("\u00A0", " ") |>
+    stringr::str_replace_all("\\_", "_") |>
+    stringr::str_replace_all("\\[", "[") |>
+    stringr::str_replace_all("\\]", "]") |>
+    stringr::str_replace_all("… ", "... ")
   if (save_html) {
     message("Output created: ", file.path(output_dir, output_html))
     writeLines(html, file.path(output_dir, output_html))
   }
   if (return_html) {
-    html <- gsub("\n", "\\n", html, fixed = TRUE)
+    html <- stringr::str_replace_all(html, "\n", "\\n")
     return(html)
   } else {
     invisible(html)
