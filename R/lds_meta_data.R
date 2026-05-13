@@ -7,10 +7,12 @@
 #' @importFrom glue glue
 #' @export
 lds_meta_data <- function(type = "resources") {
-  checkmate::assert_choice(type, c("resources", "datasets"))
+  checkmate::assert_choice(type, c("resources", "datasets", "teams"))
 
   if (type %in% c("resources", "datasets")) {
     fetch_tabular_metadata(type)
+  } else if (type == "teams") {
+    fetch_team_metadata()
   }
 }
 
@@ -47,5 +49,32 @@ fetch_tabular_metadata <- function(type) {
 
   return(meta_data)
 }
-fetch_org_metadata <- function(x) {}
+
+#' @title fetch_team_metadata
+#' @noRd
+#' @description Fetch team data, previously called orgs
+#'
+#' @importFrom glue glue
+fetch_team_metadata <- function() {
+  url <- glue::glue("{lds_url_api}v3/datasets/export.json")
+
+  resp <- url |>
+    httr2::request() |>
+    httr2::req_perform()
+
+  httr2::resp_check_status(resp)
+
+  res <- httr2::resp_body_json(resp)
+
+  rows <- lapply(res, \(x) {
+    data.frame(
+      id = x[["team"]][["id"]],
+      title = x[["team"]][["title"]]
+    )
+  })
+
+  output <- do.call(rbind, rows)
+
+  return(output[!duplicated(output), ])
+}
 fetch_topic_metadata <- function(x) {}
