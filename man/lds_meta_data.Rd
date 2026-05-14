@@ -7,7 +7,7 @@
 lds_meta_data(type = "resources")
 }
 \arguments{
-\item{type}{\if{html}{\out{<character>}} The type of meta data to be returned "resources", "orgs", "datasets" or "topics"}
+\item{type}{\if{html}{\out{<character>}} The type of meta data to be returned "resources", "datasets", "teams" or "topics"}
 }
 \description{
 Fetch all available meta data
