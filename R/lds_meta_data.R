@@ -2,17 +2,19 @@
 #' @description Fetch all available meta data
 #'
 #'
-#' @param type <character> The type of meta data to be returned "resources", "orgs", "datasets" or "topics"
+#' @param type <character> The type of meta data to be returned "resources", "datasets", "teams" or "topics"
 #' @importFrom checkmate assert_choice
 #' @importFrom glue glue
 #' @export
 lds_meta_data <- function(type = "resources") {
-  checkmate::assert_choice(type, c("resources", "datasets", "teams"))
+  checkmate::assert_choice(type, c("resources", "datasets", "teams", "topics"))
 
   if (type %in% c("resources", "datasets")) {
     fetch_tabular_metadata(type)
   } else if (type == "teams") {
     fetch_team_metadata()
+  } else {
+    fetch_topic_metadata()
   }
 }
 
@@ -77,4 +79,35 @@ fetch_team_metadata <- function() {
 
   return(output[!duplicated(output), ])
 }
-fetch_topic_metadata <- function(x) {}
+
+#' @title fetch_team_metadata
+#' @noRd
+#' @description Fetch unique team data
+#'
+#' @importFrom glue glue
+fetch_topic_metadata <- function() {
+  url <- glue::glue("{lds_url_api}v3/datasets/export.json")
+
+  resp <- url |>
+    httr2::request() |>
+    httr2::req_perform()
+
+  httr2::resp_check_status(resp)
+
+  res <- httr2::resp_body_json(resp)
+
+  rows <- unlist(lapply(res, \(x) {
+    x[["topics"]]
+  }))
+
+  output <- unique(
+    data.frame(
+      id = unname(rows[grepl("id", names(rows))]),
+      title = unname(rows[grepl("title", names(rows))])
+    )
+  )
+
+  rownames(output) <- NULL
+
+  return(output)
+}
