@@ -29,10 +29,10 @@ Imports:
     purrr,
     readr,
     rlang,
+    rmarkdown,
     stringr
 Suggests:
     knitr,
-    rmarkdown,
     testthat (>= 3.0.0),
     withr
 VignetteBuilder: knitr
