@@ -19,7 +19,7 @@ lds_patch_description <- function(slug, patch, api_key) {
   checkmate::assert_string(api_key)
   checkmate::assert_string(patch)
 
-  url <- paste0(lds_api_url, "dataset/", slug)
+  url <- paste0(lds_url_api, "dataset/", slug)
 
   body <- list(list(
     op = "replace",
