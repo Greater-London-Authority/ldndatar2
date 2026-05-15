@@ -12,15 +12,13 @@
 #' @seealso \code{\link[rmarkdown]{render}}
 #' @examples
 #' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
+#' lds_description_render("my_description.Rmd")
 #' }
 #' @rdname lds_description_render
 #' @export
-#' @import checkmate
+#' @importFrom checkmate assert_file_exists assert_logical
 #' @importFrom rmarkdown render
-#' @import stringr
+#' @importFrom stringr str_split
 #' @importFrom markdown markdownToHTML
 lds_description_render <- function(
   input,
@@ -99,7 +97,6 @@ lds_description_render <- function(
     writeLines(html, file.path(output_dir, output_html))
   }
   if (return_html) {
-    html <- gsub("\n", "\\n", html, fixed = TRUE)
     return(html)
   } else {
     invisible(html)

@@ -11,7 +11,12 @@
 #' @return A tibble of metadata
 #' @export
 #' @rdname lds2_meta_dataset
+#' @import dplyr
+#' @importFrom checkmate assert_string assert_logical
+#' @importFrom glue glue
 #' @importFrom rlang .data
+#' @importFrom httr2 request req_headers req_perform resp_status resp_body_json
+#' @importFrom purrr list_flatten
 lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   # Checkmate type checks
   checkmate::assert_string(slug)

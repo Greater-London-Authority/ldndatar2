@@ -57,6 +57,7 @@ fetch_tabular_metadata <- function(type) {
 #' @description Fetch team data, previously called orgs
 #'
 #' @importFrom glue glue
+#' @importFrom httr2 request req_perform resp_check_status resp_body_json
 fetch_team_metadata <- function() {
   url <- glue::glue("{lds_url_api}v3/datasets/export.json")
 
@@ -80,11 +81,12 @@ fetch_team_metadata <- function() {
   return(output[!duplicated(output), ])
 }
 
-#' @title fetch_team_metadata
+#' @title fetch_topic_metadata
 #' @noRd
 #' @description Fetch unique team data
 #'
 #' @importFrom glue glue
+#' @importFrom httr2 request req_perform resp_check_status resp_body_json
 fetch_topic_metadata <- function() {
   url <- glue::glue("{lds_url_api}v3/datasets/export.json")
 

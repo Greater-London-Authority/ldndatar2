@@ -7,14 +7,14 @@
 lds_patch_description(slug, patch, api_key)
 }
 \arguments{
-\item{slug}{url slug of the dataset - https://data.london.gov.uk/dataset/\if{html}{\out{<slug>}}}
+\item{slug}{A character, url slug of the dataset - https://data.london.gov.uk/dataset/\if{html}{\out{<slug>}}}
 
-\item{patch}{A character vector, output of \code{lds_description_render()}}
+\item{patch}{A character, output of \code{lds_description_render()}}
 
-\item{api_key}{London Datastore API key - needed to amend a dataset.}
+\item{api_key}{A character. London Datastore API key - needed to amend a dataset.}
 }
 \value{
-A \href{https://httr.r-lib.org/reference/response.html}{response()} object
+A response object
 }
 \description{
 Updates description page of an existing dataset on the London Datastore/.

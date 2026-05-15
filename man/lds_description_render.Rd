@@ -40,9 +40,7 @@ A markdown version of the input file is also rendered and saved.
 }
 \examples{
 \dontrun{
-if(interactive()){
- #EXAMPLE1
- }
+lds_description_render("my_description.Rmd")
 }
 }
 \seealso{
