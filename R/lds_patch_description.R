@@ -6,11 +6,10 @@
 #' @param api_key London Datastore API key - needed to amend a dataset.
 #' @return A [response()](https://httr.r-lib.org/reference/response.html) object
 #' @examples
-#' new_description <- lds_description_render(
-#' "datastore_description.Rmd",
-#' include_title = FALSE,
-#' save_html = FALSE)
+#' \dontrun{
+#' new_description <- lds_description_render("datastore_description.Rmd", save_html = FALSE)
 #' lds_patch_description(slug = "2o8xw", patch = new_description, api_key = Sys.getenv("LDS_API_KEY"))
+#' }
 #' @rdname lds_patch_description
 #' @export
 #' @import checkmate
