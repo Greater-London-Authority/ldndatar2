@@ -7,10 +7,15 @@ pak::lockfile_create(
     "here",
     "testthat",
     "checkmate",
+    "dplyr",
     "devtools",
     "glue",
     "janitor",
-    "lubridate"
+    "lubridate",
+    "markdown",
+    "rlang",
+    "rmarkdown",
+    "stringr"
   ),
   upgrade = FALSE,
   dependencies = NA,

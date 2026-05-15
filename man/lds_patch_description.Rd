@@ -20,9 +20,9 @@ A \href{https://httr.r-lib.org/reference/response.html}{response()} object
 Updates description page of an existing dataset on the London Datastore/.
 }
 \examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
+new_description <- lds_description_render(
+"datastore_description.Rmd",
+include_title = FALSE,
+save_html = FALSE)
+lds_patch_description(slug = "2o8xw", patch = new_description, api_key = Sys.getenv("LDS_API_KEY"))
 }

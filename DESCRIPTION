@@ -25,6 +25,7 @@ Imports:
     httr2,
     janitor,
     lubridate,
+    markdown,
     purrr,
     readr,
     rlang,
