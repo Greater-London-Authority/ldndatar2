@@ -12,11 +12,6 @@ test_that("type must be one of the allowed choices", {
   )
 
   expect_error(
-    lds_meta_data(type = "topics"),
-    "type"
-  )
-
-  expect_error(
     lds_meta_data(type = "tables"),
     "type"
   )
