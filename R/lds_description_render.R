@@ -51,6 +51,7 @@ lds_description_render <- function(
 #' @param operation A character vector - "remove" or "add"
 #' @return A html string.
 #' @importFrom checkmate assert_choice
+#' @noRd
 fix_html_title <- function(input_html, operation) {
   checkmate::assert_choice(c("remove", "add"))
 
