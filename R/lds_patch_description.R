@@ -1,4 +1,3 @@
-####################### URL for the London Datastore API #######################
 #' @title lds_patch_description
 #' @description Updates description page of an existing dataset on the London Datastore/.
 #' @param slug A character, url slug of the dataset - https://data.london.gov.uk/dataset/<slug>
@@ -21,20 +20,25 @@ lds_patch_description <- function(slug, patch, api_key) {
 
   url <- paste0(lds_url_api, "dataset/", slug)
 
-  body <- list(list(
-    op = "replace",
-    path = "/description",
-    value = patch
-  ))
+  patches <- list(description = patch)
+  patches[["updatedAt"]] <- Sys.time()
 
-  resp <- httr2::request(url) |>
-    httr2::req_method("PATCH") |>
-    httr2::req_headers(
-      Authorization = api_key,
-      "Content-Type" = "application/json-patch+json"
-    ) |>
-    httr2::req_body_json(body) |>
-    httr2::req_perform()
+  for (item in names(patches)) {
+    body <- list(list(
+      op = "replace",
+      path = paste0("/", item),
+      value = patches[[item]]
+    ))
 
-  httr2::resp_check_status(resp)
+    resp <- httr2::request(url) |>
+      httr2::req_method("PATCH") |>
+      httr2::req_headers(
+        Authorization = api_key,
+        "Content-Type" = "application/json-patch+json"
+      ) |>
+      httr2::req_body_json(body) |>
+      httr2::req_perform()
+
+    httr2::resp_check_status(resp)
+  }
 }

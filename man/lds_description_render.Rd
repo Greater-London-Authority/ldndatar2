@@ -4,30 +4,22 @@
 \alias{lds_description_render}
 \title{lds_description_render}
 \usage{
-lds_description_render(
-  input,
-  output_file = NULL,
-  output_dir = NULL,
-  include_title = TRUE,
-  save_html = TRUE,
-  return_html = TRUE,
-  ...
-)
+lds_description_render(input, include_title = FALSE, ...)
 }
 \arguments{
 \item{input}{The input file to be rendered. This can be an R script (.R), an R Markdown document (.Rmd), or a plain markdown document.}
+
+\item{include_title}{Include the YAML title in the output, Default: TRUE}
+
+\item{...}{Other parameters passed to rmarkdown::render}
 
 \item{output_file}{The name of the output file. If using NULL then the output filename will be based on filename for the input file. If a filename is provided, a path to the output file can also be provided. Note that the output_dir option allows for specifying the output file path as well, however, if also specifying the path, the directory must exist. If output_file is specified but does not have a file extension, an extension will be automatically added according to the output format. To avoid the automatic file extension, put the output_file value in I(), e.g., I('my-output'). Default: NULL}
 
 \item{output_dir}{The output directory for the rendered output_file. This allows for a choice of an alternate directory to which the output file should be written (the default output directory of that of the input file). If a path is provided with a filename in output_file the directory specified here will take precedence. Please note that any directory path provided will create any necessary directories if they do not exist. Default: NULL}
 
-\item{include_title}{Include the YAML title in the output, Default: TRUE}
-
 \item{save_html}{Save a copy of the rendered html. The HTML will be the fragment only (no header, body, CSS etc). Default: TRUE}
 
 \item{return_html}{Return a copy of the rendered html. Default: TRUE}
-
-\item{...}{Other parameters passed to rmarkdown::render}
 }
 \value{
 By default will return the rendered html string.
@@ -40,7 +32,7 @@ A markdown version of the input file is also rendered and saved.
 }
 \examples{
 \dontrun{
-lds_description_render("my_description.Rmd")
+lds_description_render(input = "my_description.Rmd")
 }
 }
 \seealso{
