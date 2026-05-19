@@ -27,7 +27,8 @@ lds_description_render <- function(
     input = input,
     output_format = rmarkdown::html_document(),
     quiet = TRUE,
-    output_dir = dir
+    output_dir = dir,
+    ...
   )
 
   html_file <- list.files(tempdir(), pattern = "*.html")

@@ -7,9 +7,9 @@
 fix_html_title(input_html, operation)
 }
 \arguments{
-\item{operation}{A character vector - "remove" or "add"}
+\item{input_html}{A character vector.}
 
-\item{html}{A character vector.}
+\item{operation}{A character vector - "remove" or "add"}
 }
 \value{
 A html string.
