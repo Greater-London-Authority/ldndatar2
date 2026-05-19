@@ -1,11 +1,7 @@
 #' @title lds_description_render
 #' @description Render the input file to html suitable to be used in the description field of a dataset on the London DataStore.
 #' @param input The input file to be rendered. This can be an R script (.R), an R Markdown document (.Rmd), or a plain markdown document.
-#' @param output_file The name of the output file. If using NULL then the output filename will be based on filename for the input file. If a filename is provided, a path to the output file can also be provided. Note that the output_dir option allows for specifying the output file path as well, however, if also specifying the path, the directory must exist. If output_file is specified but does not have a file extension, an extension will be automatically added according to the output format. To avoid the automatic file extension, put the output_file value in I(), e.g., I('my-output'). Default: NULL
-#' @param output_dir The output directory for the rendered output_file. This allows for a choice of an alternate directory to which the output file should be written (the default output directory of that of the input file). If a path is provided with a filename in output_file the directory specified here will take precedence. Please note that any directory path provided will create any necessary directories if they do not exist. Default: NULL
 #' @param include_title Include the YAML title in the output, Default: TRUE
-#' @param save_html Save a copy of the rendered html. The HTML will be the fragment only (no header, body, CSS etc). Default: TRUE
-#' @param return_html Return a copy of the rendered html. Default: TRUE
 #' @param ... Other parameters passed to rmarkdown::render
 #' @return By default will return the rendered html string.
 #' @details A markdown version of the input file is also rendered and saved.
