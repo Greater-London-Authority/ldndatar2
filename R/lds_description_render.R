@@ -46,7 +46,7 @@ lds_description_render <- function(
 
 #' @title fix_html_title
 #' @description Ensures that title is compatible with datastore html.
-#' @param html A character vector.
+#' @param input_html A character vector.
 #' @param operation A character vector - "remove" or "add"
 #' @return A html string.
 #' @importFrom checkmate assert_choice
