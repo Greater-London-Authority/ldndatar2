@@ -13,7 +13,7 @@ lds_meta_data <- function(type = "resources") {
     fetch_tabular_metadata(type)
   } else if (type == "teams") {
     fetch_team_metadata()
-  } else {
+  } else if (type == "topics") {
     fetch_topic_metadata()
   }
 }
@@ -59,26 +59,11 @@ fetch_tabular_metadata <- function(type) {
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_check_status resp_body_json
 fetch_team_metadata <- function() {
-  url <- glue::glue("{lds_url_api}v3/datasets/export.json")
+  res <- fetch_all_api_metadata()
 
-  resp <- url |>
-    httr2::request() |>
-    httr2::req_perform()
+  output <- extract_team_metadata(res)
 
-  httr2::resp_check_status(resp)
-
-  res <- httr2::resp_body_json(resp)
-
-  rows <- lapply(res, \(x) {
-    data.frame(
-      id = x[["team"]][["id"]],
-      title = x[["team"]][["title"]]
-    )
-  })
-
-  output <- do.call(rbind, rows)
-
-  return(output[!duplicated(output), ])
+  return(output)
 }
 
 #' @title fetch_topic_metadata
@@ -88,15 +73,30 @@ fetch_team_metadata <- function() {
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_check_status resp_body_json
 fetch_topic_metadata <- function() {
+  res <- fetch_all_api_metadata()
+
+  output <- extract_topic_metadata(res)
+
+  return(output)
+}
+
+# Breakdown the functions above, so the api call and data cleaning are done separately
+fetch_all_api_metadata <- function() {
   url <- glue::glue("{lds_url_api}v3/datasets/export.json")
 
-  resp <- url |>
-    httr2::request() |>
+  req <- url |>
+    httr2::request()
+
+  res <- req |>
     httr2::req_perform()
 
-  httr2::resp_check_status(resp)
+  httr2::resp_check_status(res)
 
-  res <- httr2::resp_body_json(resp)
+  return(httr2::resp_body_json(res))
+}
+
+extract_topic_metadata <- function(res) {
+  checkmate::assert_list(res)
 
   rows <- unlist(lapply(res, \(x) {
     x[["topics"]]
@@ -109,7 +109,30 @@ fetch_topic_metadata <- function() {
     )
   )
 
+  if (nrow(output) == 0) {
+    stop("Bad JSON, check input.")
+  }
+
   rownames(output) <- NULL
 
   return(output)
+}
+
+extract_team_metadata <- function(res) {
+  checkmate::assert_list(res)
+
+  rows <- lapply(res, \(x) {
+    data.frame(
+      id = x[["team"]][["id"]],
+      title = x[["team"]][["title"]]
+    )
+  })
+
+  output <- do.call(rbind, rows)
+
+  if (nrow(output) == 0) {
+    stop("Bad JSON, check input.")
+  }
+
+  return(output[!duplicated(output), ])
 }
