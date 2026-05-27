@@ -1,12 +1,11 @@
-#' @title lds_meta_data
+#' @title lds_metadata
 #' @description Fetch all available meta data
-#'
-#'
 #' @param type <character> The type of meta data to be returned "resources", "datasets", "teams" or "topics"
+#' @return A dataframe.
 #' @importFrom checkmate assert_choice
 #' @importFrom glue glue
 #' @export
-lds_meta_data <- function(type = "resources") {
+lds_metadata <- function(type = "resources") {
   checkmate::assert_choice(type, c("resources", "datasets", "teams", "topics"))
 
   if (type %in% c("resources", "datasets")) {
@@ -21,8 +20,8 @@ lds_meta_data <- function(type = "resources") {
 #' @title fetch_tabular_metadata
 #' @noRd
 #' @description Fetch resources and datasets metadata
-#'
 #' @param type A character
+#' @return A dataframe.
 #' @importFrom checkmate assert_choice
 #' @importFrom glue glue
 #' @importFrom dplyr mutate across contains
@@ -55,9 +54,6 @@ fetch_tabular_metadata <- function(type) {
 #' @title fetch_team_metadata
 #' @noRd
 #' @description Fetch team data, previously called orgs
-#'
-#' @importFrom glue glue
-#' @importFrom httr2 request req_perform resp_check_status resp_body_json
 fetch_team_metadata <- function() {
   res <- fetch_all_api_metadata()
 
@@ -68,10 +64,7 @@ fetch_team_metadata <- function() {
 
 #' @title fetch_topic_metadata
 #' @noRd
-#' @description Fetch unique team data
-#'
-#' @importFrom glue glue
-#' @importFrom httr2 request req_perform resp_check_status resp_body_json
+#' @description Fetch unique topic data
 fetch_topic_metadata <- function() {
   res <- fetch_all_api_metadata()
 
@@ -80,7 +73,12 @@ fetch_topic_metadata <- function() {
   return(output)
 }
 
-# Breakdown the functions above, so the api call and data cleaning are done separately
+#' @title fetch_all_api_metadata
+#' @noRd
+#' @description Fetch all api metadata
+#'
+#' @importFrom glue glue
+#' @importFrom httr2 request req_perform resp_check_status resp_body_json
 fetch_all_api_metadata <- function() {
   url <- glue::glue("{lds_url_api}v3/datasets/export.json")
 
@@ -95,6 +93,9 @@ fetch_all_api_metadata <- function() {
   return(httr2::resp_body_json(res))
 }
 
+#' @title extract_topic_metadata
+#' @noRd
+#' @description Extract topic metadata from nested list.
 extract_topic_metadata <- function(res) {
   checkmate::assert_list(res)
 
@@ -118,6 +119,9 @@ extract_topic_metadata <- function(res) {
   return(output)
 }
 
+#' @title extract_team_metadata
+#' @noRd
+#' @description Extract team metadata from nested list.
 extract_team_metadata <- function(res) {
   checkmate::assert_list(res)
 

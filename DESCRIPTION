@@ -15,9 +15,9 @@ Description: Provides functions to access and download data, metadata,
 License: MIT + file LICENSE
 URL: https://github.com/Greater-London-Authority/ldndatar2, https://greater-london-authority.github.io/ldndatar2/
 BugReports: https://github.com/Greater-London-Authority/ldndatar2/issues
-Depends:
+Depends: 
     R (>= 4.1.0)
-Imports:
+Imports: 
     checkmate,
     curl,
     dplyr,
@@ -30,7 +30,8 @@ Imports:
     rlang,
     rmarkdown,
     stringr
-Suggests:
+Suggests: 
+    httptest2,
     knitr,
     testthat (>= 3.0.0),
     withr
