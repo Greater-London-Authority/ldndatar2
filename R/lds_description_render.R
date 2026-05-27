@@ -53,7 +53,7 @@ lds_description_render <- function(
 #' @importFrom checkmate assert_choice
 #' @noRd
 fix_html_title <- function(input_html, operation) {
-  checkmate::assert_choice(c("remove", "add"))
+  checkmate::assert_choice(operation, c("remove", "add"))
 
   html <- gsub("<title>(.*?)</title>", "", input_html)
 
