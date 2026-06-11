@@ -9,6 +9,8 @@ inst/doc
 *.tar.gz
 vignettes/*.html
 vignettes/*.R
+.env
 
 # Mac files
 .DS_Store
+docs

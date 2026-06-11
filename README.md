@@ -34,10 +34,10 @@ remotes::install_github("Greater-London-Authority/ldndatar2")
 library(ldndatar2)
 
 # Browse available datasets
-datasets <- lds_meta_data(type = "datasets")
+datasets <- lds_metadata(type = "datasets")
 
 # Browse available resources
-resources <- lds_meta_data(type = "resources")
+resources <- lds_metadata(type = "resources")
 
 # Download metadata for a specific dataset
 metadata <- lds_download_metadata(slug = "your-dataset-slug")

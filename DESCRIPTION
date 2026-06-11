@@ -2,8 +2,8 @@ Package: ldndatar2
 Title: Access London Datastore Data and Resources
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Micheal", "Slade", , "micheal.slade@london.gov.uk", role = "aut"),
-    person("Izabel", "Bahia", , "Izabel.Bahia@london.gov.uk", role = "cre")
+    person("Micheal", "Slade", , "micheal.slade@london.gov.uk", role = c("aut", "cre")),
+    person("Izabel", "Bahia", , "mariaizabel.bahia@gmail.com", role = c("aut", "ctb"))
     )
 Description: Provides functions to access and download data, metadata,
     and resources from the London Datastore
@@ -13,11 +13,11 @@ Description: Provides functions to access and download data, metadata,
     and retrieve datasets published by the Greater London Authority and
     partner organisations.
 License: MIT + file LICENSE
-URL: https://github.com/Greater-London-Authority/ldndatar2
+URL: https://github.com/Greater-London-Authority/ldndatar2, https://greater-london-authority.github.io/ldndatar2/
 BugReports: https://github.com/Greater-London-Authority/ldndatar2/issues
-Depends:
+Depends: 
     R (>= 4.1.0)
-Imports:
+Imports: 
     checkmate,
     curl,
     dplyr,
@@ -28,10 +28,11 @@ Imports:
     purrr,
     readr,
     rlang,
-    stringr
-Suggests:
-    knitr,
     rmarkdown,
+    stringr
+Suggests: 
+    httptest2,
+    knitr,
     testthat (>= 3.0.0),
     withr
 VignetteBuilder: knitr
