@@ -16,7 +16,12 @@
       "id": "53oj7",
       "title": "Greater London Authority"
     },
-    "topics": [],
+    "topics": [
+      {
+        "id": "transport",
+        "title": "Transport"
+      }
+    ],
     "tags": [
       "visualisation-data"
     ],

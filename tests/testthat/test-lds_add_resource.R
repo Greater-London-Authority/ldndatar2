@@ -192,18 +192,18 @@ test_that("update_timestamp must be a single logical value", {
 # ---- Default title derivation ----
 
 test_that("res_title defaults to the file name extracted from file_path", {
-  # We can verify this indirectly: the function should pass validation
-  # and only fail later when it tries to hit the API. The important thing
-  # is that it doesn't error on the validation stage when res_title is NULL.
+  # Verify validation passes for a NULL res_title without making a real API
+  # call. We stub out the network with without_internet() and assert that the
+  # function reached the HTTP layer.
   tmp <- withr::local_tempfile(fileext = ".csv")
   writeLines("a,b\n1,2", tmp)
 
-  # Expect an HTTP-related error (not a validation error) since we can't
-  # reach the real API in tests. This proves validation passed.
-  expect_error(
-    lds_add_resource(file_path = tmp, slug = "ds", api_key = "fake-key"),
-    class = "httr2_http"
-  )
+  httptest2::without_internet({
+    expect_error(
+      lds_add_resource(file_path = tmp, slug = "ds", api_key = "fake-key"),
+      class = "httptest2_request"
+    )
+  })
 })
 
 # ---- Multiple bad arguments at once ----

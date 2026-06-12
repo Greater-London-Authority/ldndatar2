@@ -1,0 +1,27 @@
+{
+  "id": "test-dataset",
+  "title": "Mock Test Dataset",
+  "sharing": "public",
+  "createdAt": "2020-01-01T00:00:00.000Z",
+  "updatedAt": "2020-06-15T12:30:00.000Z",
+  "tags": ["transport", "buses"],
+  "topics": ["transport"],
+  "shares": [],
+  "readonly": [],
+  "resources": {
+    "res-abc-1": {
+      "title": "Bus data 2019",
+      "url": "https://data.london.gov.uk/download/test-dataset/res-abc-1/bus-data-2019.csv",
+      "order": 1,
+      "check_http_status": 200,
+      "check_size": 12345
+    },
+    "res-abc-2": {
+      "title": "Bus data 2020",
+      "url": "https://data.london.gov.uk/download/test-dataset/res-abc-2/bus-data-2020.csv",
+      "order": 2,
+      "check_http_status": 200,
+      "check_size": 23456
+    }
+  }
+}

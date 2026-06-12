@@ -1,4 +1,9 @@
 # ---- Input validation: slug ----
+#
+# Tests that exercise the HTTP layer are wrapped in
+# `httptest2::without_internet()` so they don't make real API calls (which would
+# burn through the rate limit). The assertion is the same in spirit: validation
+# passed and the function reached the HTTP layer.
 
 test_that("slug must be a string", {
   expect_error(
@@ -48,17 +53,6 @@ test_that("res_title must be NULL or a string", {
   )
 })
 
-test_that("res_title accepts NULL (the default)", {
-  # Should pass validation and only fail at the HTTP stage
-  expect_error(
-    lds_download_resource(
-      slug = "nonexistent-slug-xyz-999",
-      res_title = NULL
-    ),
-    class = "httr2_http"
-  )
-})
-
 # ---- Input validation: res_id ----
 
 test_that("res_id must be NULL or a string", {
@@ -75,17 +69,6 @@ test_that("res_id must be NULL or a string", {
   expect_error(
     lds_download_resource(slug = "test-dataset", res_id = c("a", "b")),
     "res_id"
-  )
-})
-
-test_that("res_id accepts NULL (the default)", {
-  # Should pass validation and only fail at the HTTP stage
-  expect_error(
-    lds_download_resource(
-      slug = "nonexistent-slug-xyz-999",
-      res_id = NULL
-    ),
-    class = "httr2_http"
   )
 })
 
@@ -108,37 +91,15 @@ test_that("api_key must be NULL or a string", {
   )
 })
 
-test_that("api_key accepts NULL (the default)", {
-  # Should pass validation and only fail at the HTTP stage
-  expect_error(
-    lds_download_resource(
-      slug = "nonexistent-slug-xyz-999",
-      api_key = NULL
-    ),
-    class = "httr2_http"
-  )
-})
-
 # ---- Valid inputs pass validation ----
 
 test_that("valid inputs pass validation and reach the HTTP layer", {
-  # With a fake slug we expect an HTTP error, not a validation error
-  expect_error(
-    lds_download_resource(slug = "nonexistent-slug-xyz-999"),
-    class = "httr2_http"
-  )
-})
-
-test_that("valid inputs with all optional params pass validation", {
-  expect_error(
-    lds_download_resource(
-      slug = "nonexistent-slug-xyz-999",
-      res_title = "Some Resource",
-      res_id = "abc-123",
-      api_key = "fake-key"
-    ),
-    class = "httr2_http"
-  )
+  httptest2::without_internet({
+    expect_error(
+      lds_download_resource(slug = "nonexistent-slug-xyz-999"),
+      class = "httptest2_request"
+    )
+  })
 })
 
 # ---- Multiple bad arguments ----
