@@ -4,8 +4,9 @@
 and resources from the [London Datastore](https://data.london.gov.uk).
 This package is an updated successor to the original `ldndatar` package,
 utilising the current London Datastore API. It allows users to
-programmatically catalogue, query, and retrieve datasets published by
-the Greater London Authority and partner organisations.
+programmatically catalogue, query, retrieve and update datasets and
+resources published by the Greater London Authority and partner
+organisations.
 
 ## Installation
 
@@ -41,7 +42,7 @@ resources <- lds_metadata(type = "resources")
 # Download metadata for a specific dataset
 metadata <- lds_download_metadata(slug = "your-dataset-slug")
 
-# Download a resource to your working directory
+# Download a resource to your working directory (folder)
 lds_download_resource(slug = "your-dataset-slug")
 ```
 
@@ -66,6 +67,8 @@ metadata <- lds_download_metadata(slug = "private-dataset-slug", api_key = "your
   : lds_download_metadata
 - [`lds_add_resource()`](https://greater-london-authority.github.io/ldndatar2/reference/lds_add_resource.md)
   : Add a resource to a London Datastore dataset
+- [`lds_delete_resource()`](https://greater-london-authority.github.io/ldndatar2/reference/lds_delete_resource.md)
+  : Delete a resource in a London Datastore dataset
 - [`lds_description_render()`](https://greater-london-authority.github.io/ldndatar2/reference/lds_description_render.md)
   : lds_description_render
 - [`lds_download_resource()`](https://greater-london-authority.github.io/ldndatar2/reference/lds_download_resource.md)
@@ -74,6 +77,8 @@ metadata <- lds_download_metadata(slug = "private-dataset-slug", api_key = "your
   : lds_metadata
 - [`lds_patch_description()`](https://greater-london-authority.github.io/ldndatar2/reference/lds_patch_description.md)
   : lds_patch_description
+- [`lds_replace_resource()`](https://greater-london-authority.github.io/ldndatar2/reference/lds_replace_resource.md)
+  : Replace a resource in a London Datastore dataset
 
 # Articles
 

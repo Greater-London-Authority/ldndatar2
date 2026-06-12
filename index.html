@@ -56,7 +56,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><code>ldndatar2</code> provides functions to access and download data, metadata, and resources from the <a href="https://data.london.gov.uk" class="external-link">London Datastore</a>. This package is an updated successor to the original <code>ldndatar</code> package, utilising the current London Datastore API. It allows users to programmatically catalogue, query, and retrieve datasets published by the Greater London Authority and partner organisations.</p>
+<p><code>ldndatar2</code> provides functions to access and download data, metadata, and resources from the <a href="https://data.london.gov.uk" class="external-link">London Datastore</a>. This package is an updated successor to the original <code>ldndatar</code> package, utilising the current London Datastore API. It allows users to programmatically catalogue, query, retrieve and update datasets and resources published by the Greater London Authority and partner organisations.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -84,7 +84,7 @@
 <span><span class="co"># Download metadata for a specific dataset</span></span>
 <span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lds2_meta_dataset.html">lds_download_metadata</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="st">"your-dataset-slug"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Download a resource to your working directory</span></span>
+<span><span class="co"># Download a resource to your working directory (folder)</span></span>
 <span><span class="fu"><a href="reference/lds_download_resource.html">lds_download_resource</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="st">"your-dataset-slug"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="private-datasets">Private Datasets<a class="anchor" aria-label="anchor" href="#private-datasets"></a>
