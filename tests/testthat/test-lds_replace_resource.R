@@ -222,13 +222,3 @@ httptest2::with_mock_api({
     )
   })
 })
-
-# httptest2::capture_requests({
-#   lds_replace_resource(
-#     file_path = "test_file.txt",
-#     slug = "vd4q4",
-#     resource_name = "test_file.txt",
-#     resource_id = "7yw",
-#     api_key = api_key
-#   )
-# })
