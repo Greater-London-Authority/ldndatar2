@@ -111,3 +111,35 @@ test_that("earliest failing assertion is reported when multiple args are bad", {
     "slug"
   )
 })
+
+testthat::test_that("filters to correct resource by title", {
+  mock_metadata <- data.frame(
+    id = rep("idxxx", 3),
+    slug = rep("slug", 3),
+    sharing = c("public", "private", "public"),
+    order = c(1, 2, 3),
+    resource_title = c("report.pdf", "data.csv", "text.txt"),
+    resource_id = c("r1", "r2", "r3"),
+    url = c(
+      "https://example.com/report.pdf",
+      "https://example.com/data.csv",
+      "https://example.com/text.txt"
+    ),
+    stringsAsFactors = FALSE
+  )
+
+  testthat::with_mocked_bindings(
+    lds_download_metadata = function(...) mock_metadata,
+    testthat::with_mocked_bindings(
+      req_perform = function(...) invisible(NULL),
+      .package = "httr2",
+      result <- lds_download_resource(
+        slug = "slug",
+        res_title = "report.pdf",
+        dir = tempdir()
+      )
+    )
+  )
+
+  testthat::expect_equal(result, file.path(tempdir(), "report.pdf"))
+})
