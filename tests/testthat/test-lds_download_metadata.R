@@ -121,3 +121,47 @@ httptest2::with_mock_api({
   })
 })
 
+
+testthat::test_that("error in http response", {
+  mock_http_error <- function(status) {
+    function(...) {
+      httr2::response(status_code = status)
+    }
+  }
+
+  testthat::expect_error(
+    testthat::with_mocked_bindings(
+      req_perform = mock_http_error(404),
+      .package = "httr2",
+      lds_download_metadata(slug = "slug", api_key = "api_key"),
+    ),
+    "This dataset does not exist"
+  )
+
+  testthat::expect_error(
+    testthat::with_mocked_bindings(
+      req_perform = mock_http_error(403),
+      .package = "httr2",
+      lds_download_metadata(slug = "slug", api_key = "api_key"),
+    ),
+    "You do not have permission to see this dataset"
+  )
+
+  testthat::expect_error(
+    testthat::with_mocked_bindings(
+      req_perform = mock_http_error(403),
+      .package = "httr2",
+      lds_download_metadata(slug = "slug", api_key = NULL),
+    ),
+    "This is a private dataset, please provide an API key"
+  )
+})
+
+testthat::test_that("test remove_na_list", {
+  input <- list(item1 = 1, item2 = NA, item3 = "id")
+  expected_output <- list(item1 = 1, item3 = "id")
+  output <- remove_na_list(input)
+
+  testthat::expect_identical(output, expected_output)
+  testthat::expect_identical(length(output), length(expected_output))
+})
