@@ -25,7 +25,7 @@ testthat::test_that("lds_replace_resource validates inputs", {
   )
 
   # resource_name must be a string
-  expect_error(
+  testthat::expect_error(
     lds_replace_resource(
       file_path = tmp,
       slug = "abcde",
@@ -34,9 +34,31 @@ testthat::test_that("lds_replace_resource validates inputs", {
       api_key = "key-123"
     )
   )
+
+  # resource_id must be a string
+  testthat::expect_error(
+    lds_replace_resource(
+      file_path = tmp,
+      slug = "abcde",
+      resource_name = "my-resource.csv",
+      resource_id = 999,
+      api_key = "key-123"
+    )
+  )
+
+  # api key should be string
+  testthat::expect_error(
+    lds_replace_resource(
+      file_path = tmp,
+      slug = "abcde",
+      resource_name = "my-resource.csv",
+      resource_id = "res-001",
+      api_key = 123
+    )
+  )
 })
 
-test_that("lds_replace_resource stops when resource not found", {
+testthat::test_that("lds_replace_resource stops when resource not found", {
   tmp <- withr::local_tempfile(fileext = ".csv")
   writeLines("a,b\n1,2", tmp)
 
@@ -69,7 +91,7 @@ testthat::test_that("lds_replace_resource stops when file names don't match", {
   writeLines("a,b\n1,2", tmp)
 
   httptest2::with_mock_api({
-    expect_error(
+    testthat::expect_error(
       lds_replace_resource(
         file_path = tmp,
         slug = "abcde",
@@ -77,7 +99,7 @@ testthat::test_that("lds_replace_resource stops when file names don't match", {
         resource_id = "res-001",
         api_key = "key-123"
       ),
-      regexp = "Resource not found, check inputs."
+      "Resource not found, check inputs."
     )
   })
 })
@@ -120,7 +142,7 @@ testthat::test_that("lds_replace_resource stops on invalid confirmation input", 
   writeLines("a,b\n1,2", tmp)
 
   httptest2::with_mock_api({
-    expect_error(
+    testthat::expect_error(
       testthat::with_mocked_bindings(
         lds_metadata = function(type) {
           data.frame(
@@ -146,3 +168,67 @@ testthat::test_that("lds_replace_resource stops on invalid confirmation input", 
     )
   })
 })
+
+httptest2::with_mock_api({
+  tmp <- "text-fixture/another_file.txt"
+  tmp_error <- "text-fixture/text.txt"
+
+  mock_metadata <- function(...) {
+    data.frame(
+      dataset_id = "vd4q4",
+      id = "7yw",
+      title = "another_file.txt",
+      stringsAsFactors = FALSE
+    )
+  }
+
+  testthat::test_that("lds_replace_resource calls POST method", {
+    httptest2::expect_POST(
+      testthat::with_mocked_bindings(
+        readline = function(...) "1",
+        lds_metadata = mock_metadata,
+        lds_replace_resource(
+          file_path = tmp,
+          slug = "vd4q4",
+          resource_name = "another_file.txt",
+          resource_id = "7yw",
+          api_key = "api_key"
+        )
+      ),
+      "https://data.london.gov.uk/api/dataset/vd4q4/resources/7yw"
+    )
+  })
+  testthat::test_that("lds_replace_resource returns invisibly on success", {
+    testthat::expect_error(
+      testthat::with_mocked_bindings(
+        readline = function(...) "1",
+        lds_metadata = function(...) {
+          data.frame(
+            dataset_id = "vd4q4",
+            id = "7yw",
+            title = "another_file.txt",
+            stringsAsFactors = FALSE
+          )
+        },
+        lds_replace_resource(
+          file_path = tmp_error,
+          slug = "vd4q4",
+          resource_name = "another_file.txt",
+          resource_id = "7yw",
+          api_key = "api_key"
+        )
+      ),
+      "File names don't match, use `lds_add_resource` or check file name."
+    )
+  })
+})
+
+# httptest2::capture_requests({
+#   lds_replace_resource(
+#     file_path = "test_file.txt",
+#     slug = "vd4q4",
+#     resource_name = "test_file.txt",
+#     resource_id = "7yw",
+#     api_key = api_key
+#   )
+# })
