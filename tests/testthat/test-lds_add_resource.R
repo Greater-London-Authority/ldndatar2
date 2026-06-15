@@ -4,8 +4,8 @@ test_that("file_path must exist on disk", {
   expect_error(
     lds_add_resource(
       file_path = "totally/nonexistent/file.csv",
-      slug      = "some-dataset",
-      api_key   = "test-key-123"
+      slug = "some-dataset",
+      api_key = "test-key-123"
     ),
     "file_path"
   )
@@ -15,8 +15,8 @@ test_that("file_path rejects non-string types", {
   expect_error(
     lds_add_resource(
       file_path = 123,
-      slug      = "some-dataset",
-      api_key   = "test-key-123"
+      slug = "some-dataset",
+      api_key = "test-key-123"
     ),
     "file_path"
   )
@@ -24,8 +24,8 @@ test_that("file_path rejects non-string types", {
   expect_error(
     lds_add_resource(
       file_path = NULL,
-      slug      = "some-dataset",
-      api_key   = "test-key-123"
+      slug = "some-dataset",
+      api_key = "test-key-123"
     ),
     "file_path"
   )
@@ -36,7 +36,6 @@ test_that("file_path rejects non-string types", {
 test_that("slug must be a non-empty string", {
   tmp <- withr::local_tempfile(fileext = ".csv")
   writeLines("a,b\n1,2", tmp)
-
 
   expect_error(
     lds_add_resource(file_path = tmp, slug = "", api_key = "key"),
@@ -92,7 +91,9 @@ test_that("res_title must be NULL or a non-empty string", {
 
   expect_error(
     lds_add_resource(
-      file_path = tmp, slug = "ds", api_key = "key",
+      file_path = tmp,
+      slug = "ds",
+      api_key = "key",
       res_title = ""
     ),
     "res_title"
@@ -100,7 +101,9 @@ test_that("res_title must be NULL or a non-empty string", {
 
   expect_error(
     lds_add_resource(
-      file_path = tmp, slug = "ds", api_key = "key",
+      file_path = tmp,
+      slug = "ds",
+      api_key = "key",
       res_title = 123
     ),
     "res_title"
@@ -115,7 +118,9 @@ test_that("description must be NULL or a string", {
 
   expect_error(
     lds_add_resource(
-      file_path = tmp, slug = "ds", api_key = "key",
+      file_path = tmp,
+      slug = "ds",
+      api_key = "key",
       description = 42
     ),
     "description"
@@ -130,7 +135,9 @@ test_that("temporal_coverage_from must be NULL, a Date, or a string", {
 
   expect_error(
     lds_add_resource(
-      file_path = tmp, slug = "ds", api_key = "key",
+      file_path = tmp,
+      slug = "ds",
+      api_key = "key",
       temporal_coverage_from = 12345
     ),
     "temporal_coverage_from"
@@ -138,7 +145,9 @@ test_that("temporal_coverage_from must be NULL, a Date, or a string", {
 
   expect_error(
     lds_add_resource(
-      file_path = tmp, slug = "ds", api_key = "key",
+      file_path = tmp,
+      slug = "ds",
+      api_key = "key",
       temporal_coverage_from = TRUE
     ),
     "temporal_coverage_from"
@@ -151,7 +160,9 @@ test_that("temporal_coverage_to must be NULL, a Date, or a string", {
 
   expect_error(
     lds_add_resource(
-      file_path = tmp, slug = "ds", api_key = "key",
+      file_path = tmp,
+      slug = "ds",
+      api_key = "key",
       temporal_coverage_to = list("bad")
     ),
     "temporal_coverage_to"
@@ -166,7 +177,9 @@ test_that("update_timestamp must be a single logical value", {
 
   expect_error(
     lds_add_resource(
-      file_path = tmp, slug = "ds", api_key = "key",
+      file_path = tmp,
+      slug = "ds",
+      api_key = "key",
       update_timestamp = "yes"
     ),
     "update_timestamp"
@@ -174,7 +187,9 @@ test_that("update_timestamp must be a single logical value", {
 
   expect_error(
     lds_add_resource(
-      file_path = tmp, slug = "ds", api_key = "key",
+      file_path = tmp,
+      slug = "ds",
+      api_key = "key",
       update_timestamp = NA
     ),
     "update_timestamp"
@@ -182,7 +197,9 @@ test_that("update_timestamp must be a single logical value", {
 
   expect_error(
     lds_add_resource(
-      file_path = tmp, slug = "ds", api_key = "key",
+      file_path = tmp,
+      slug = "ds",
+      api_key = "key",
       update_timestamp = c(TRUE, FALSE)
     ),
     "update_timestamp"
