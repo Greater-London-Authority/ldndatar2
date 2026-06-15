@@ -1,0 +1,131 @@
+{
+    "id": "vd4q4",
+    "site": "london",
+    "team": "4mxpm",
+    "title": "Age specific fertility rates",
+    "canonical": "/dataset/age-specific-fertility-rates-vd4q4",
+    "description": "<p><\/p>",
+    "descriptionIframe": "https://observablehq.com/embed/@ldn/fertility-rates?cells=Introduction%2Cviewof+london_map_player%2CLondonMap%2Cviewof+selected_geography_level%2Cviewof+selected_geography%2Cviewof+selected_year%2CAsfrGraph%2Cviewof+add_adj_tfr%2CTfrGraph%2CMeanAgeChildBearingGraph",
+    "masthead": "gla-demography",
+    "sharing": "public",
+    "collaborators": [
+
+    ],
+    "readusers": [
+
+    ],
+    "readteams": [
+
+    ],
+    "tags": [
+        "births",
+        "fertility",
+        "demographics",
+        "population"
+    ],
+    "topics": [
+        "demographics"
+    ],
+    "resources": {
+        "4nz": {
+            "hash": "1bb566cbda08156238fc6fc00f20dab2-6",
+            "size": 29385778,
+            "order": 2,
+            "title": "age_specific_fertility_rates.csv",
+            "format": "csv",
+            "origin": "london/dataset/vd4q4/2026-05-20T15:35:36/age_specific_fertility_rates.csv",
+            "timeframe": null,
+            "description": "Calendar year age-specific fertility rates from 1993 to 2023 for every local authority in England and Wales, aggregated to regions and nations.",
+            "url": "https://data.london.gov.uk/download/vd4q4/4nz/age_specific_fertility_rates.csv"
+        },
+        "7yw": {
+            "hash": "0bb991a0c4b8ba34a32fb3a401de199d",
+            "size": 9,
+            "order": 0,
+            "title": "test_file.txt",
+            "format": "txt",
+            "origin": "london/dataset/vd4q4/2026-06-15T14:26:41/test_file.txt",
+            "timeframe": null,
+            "description": "",
+            "url": "https://data.london.gov.uk/download/vd4q4/7yw/test_file.txt"
+        },
+        "bcb": {
+            "hash": "2353627645ffdea50046b7e7187f4d78-1",
+            "size": 1098425,
+            "order": 3,
+            "title": "adjusted_total_fertility_rates.csv",
+            "format": "csv",
+            "origin": "london/dataset/vd4q4/2026-05-20T15:33:51/total_fertility_rates.csv",
+            "timeframe": null,
+            "description": "Calendar year total fertility rates and adjusted total fertility rates from 1994 to 2022 for every local authority in England and Wales, aggregated to regions and nations.",
+            "url": "https://data.london.gov.uk/download/vd4q4/bcb/total_fertility_rates.csv"
+        },
+        "lfe": {
+            "hash": "373fbed0844263ccf47d3e646178b3b7-1",
+            "size": 593756,
+            "order": 1,
+            "title": "total_fertility_rates.csv",
+            "format": "csv",
+            "origin": "london/dataset/vd4q4/2026-05-20T15:39:17/total_fertility_rates.csv",
+            "timeframe": null,
+            "description": "Calendar year total fertility rates from 1993 to 2023 for every local authority in England and Wales, aggregated to regions and nations.",
+            "url": "https://data.london.gov.uk/download/vd4q4/lfe/total_fertility_rates.csv"
+        }
+    },
+    "links": {
+
+    },
+    "nextReviewDate": null,
+    "licence": {
+        "url": "http://www.opendefinition.org/licenses/cc-by",
+        "title": "Creative Commons Attribution"
+    },
+    "contact": {
+        "email": "demography@london.gov.uk",
+        "title": "GLA Demography"
+    },
+    "createdAt": "2025-03-17T16:11:48.000Z",
+    "updatedAt": "2026-06-15T14:26:41.323Z",
+    "archivedAt": null,
+    "custom": {
+        "geo": "Local Authority",
+        "update_frequency": "One off"
+    },
+    "readonly": {
+        "updates": [
+            {
+                "op": "replace",
+                "path": "/updatedAt",
+                "value": "2026-06-15T14:26:41.323Z"
+            },
+            {
+                "op": "replace",
+                "path": "/resources/7yw/origin",
+                "value": "london/dataset/vd4q4/2026-06-15T14:26:41/test_file.txt"
+            },
+            {
+                "op": "replace",
+                "path": "/resources/7yw/size",
+                "value": 9
+            },
+            {
+                "op": "replace",
+                "path": "/resources/7yw/hash",
+                "value": "0bb991a0c4b8ba34a32fb3a401de199d"
+            }
+        ],
+        "resource_id": "7yw",
+        "resource": {
+            "hash": "0bb991a0c4b8ba34a32fb3a401de199d",
+            "size": 9,
+            "order": 0,
+            "title": "test_file.txt",
+            "format": "txt",
+            "origin": "london/dataset/vd4q4/2026-06-15T14:26:41/test_file.txt",
+            "timeframe": null,
+            "description": "",
+            "url": "https://data.london.gov.uk/download/vd4q4/7yw/test_file.txt"
+        },
+        "new_key": "london/dataset/vd4q4/2026-06-15T14:26:41/test_file.txt"
+    }
+}
