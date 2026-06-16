@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>get_london_datastore_api_key • ldndatar2</title>
+<title>Getting your London Datastore API key • ldndatar2</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="get_london_datastore_api_key">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting your London Datastore API key">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -33,7 +33,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/get_london_datastore_api_key.html">get_london_datastore_api_key</a></li>
+<li><a class="dropdown-item" href="../articles/get_london_datastore_api_key.html">Getting your London Datastore API key</a></li>
   </ul>
 </li>
       </ul>
@@ -55,7 +55,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>get_london_datastore_api_key</h1>
+      <h1>Getting your London Datastore API key</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/Greater-London-Authority/ldndatar2/blob/dev/vignettes/get_london_datastore_api_key.Rmd" class="external-link"><code>vignettes/get_london_datastore_api_key.Rmd</code></a></small>
@@ -64,9 +64,161 @@
 
     
     
+<p>Most public datasets on the <a href="https://data.london.gov.uk" class="external-link">London Datastore</a> can be downloaded
+without signing in, but a few things need an <strong>API
+key</strong>:</p>
+<ul>
+<li>reading private (unpublished) datasets,</li>
+<li>adding, replacing or deleting resources on a dataset you own.</li>
+</ul>
+<p>An API key is just a long string of characters that identifies your
+account when <code>ldndatar2</code> talks to the Datastore. This guide
+walks through getting one, whether you already have a Datastore account
+or are starting from scratch. No prior experience with APIs is
+assumed.</p>
+<p>The whole process takes a couple of minutes.</p>
+<div class="section level2">
+<h2 id="go-to-the-london-datastore">1. Go to the London Datastore<a class="anchor" aria-label="anchor" href="#go-to-the-london-datastore"></a>
+</h2>
+<p>Open <a href="https://data.london.gov.uk" class="external-link">data.london.gov.uk</a> in
+your browser. You should see the Datastore homepage.</p>
+<div class="float">
+<img src="figures/api-key/01-datastore-homepage.png" alt="The London Datastore homepage."><div class="figcaption">The London Datastore homepage.</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="open-the-login-dialog">2. Open the login dialog<a class="anchor" aria-label="anchor" href="#open-the-login-dialog"></a>
+</h2>
+<p>In the top-right corner of the page, click <strong>Login</strong>. It
+sits just above the search box.</p>
+<div class="float">
+<img src="figures/api-key/03-login-button-zoom.png" alt="The Login link sits in the top-right corner."><div class="figcaption">The Login link sits in the top-right
+corner.</div>
+</div>
+<p>A small dialog will pop up. What you do next depends on whether you
+already have a Datastore account.</p>
+<div class="float">
+<img src="figures/api-key/04-login-dialog.png" alt="The login dialog."><div class="figcaption">The login dialog.</div>
+</div>
+<div class="section level3">
+<h3 id="if-you-already-have-an-account">If you already have an account<a class="anchor" aria-label="anchor" href="#if-you-already-have-an-account"></a>
+</h3>
+<p>Enter your email address and password and click <strong>Sign
+in</strong>. Skip ahead to <a href="#step-4">step 4</a>.</p>
+</div>
+<div class="section level3">
+<h3 id="if-you-dont-have-an-account-yet">If you don’t have an account yet<a class="anchor" aria-label="anchor" href="#if-you-dont-have-an-account-yet"></a>
+</h3>
+<p>Click <strong>Create Account</strong> in the top right of the dialog.
+You’ll be asked for your email address.</p>
+<div class="float">
+<img src="figures/api-key/05-create-account.png" alt="Creating a new account."><div class="figcaption">Creating a new account.</div>
+</div>
+<p>Type in your email and click <strong>Send signup link</strong>. The
+Datastore will email you a link to finish setting up your account — open
+the email and follow the link to choose a password. Once that’s done,
+come back to <a href="https://data.london.gov.uk" class="external-link">data.london.gov.uk</a>
+and sign in using the login dialog from step 2.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="step-4">3. Open your profile<a class="anchor" aria-label="anchor" href="#step-4"></a>
+</h2>
+<p>Once you’re signed in, a small cog icon appears in the top-right of
+the page. Click it and choose <strong>My Account</strong> from the
+menu.</p>
+<div class="float">
+<img src="figures/api-key/06-account-menu.png" alt="The account menu under the cog icon."><div class="figcaption">The account menu under the cog icon.</div>
+</div>
+<p>This takes you to your <strong>Profile</strong> page, which lists a
+few account settings, including your API key.</p>
+<div class="float">
+<img src="figures/api-key/07-profile-page.png" alt="Your Profile page."><div class="figcaption">Your Profile page.</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="reveal-and-copy-your-api-key">4. Reveal and copy your API key<a class="anchor" aria-label="anchor" href="#reveal-and-copy-your-api-key"></a>
+</h2>
+<p>Find the <strong>My API Key</strong> row and click
+<strong>Manage</strong>.</p>
+<p>A dialog opens showing your key — a string that looks something like
+<code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code> (a UUID). Click the
+copy icon next to the key to copy it to your clipboard.</p>
+<div class="float">
+<img src="figures/api-key/09-api-key-dialog.png" alt="The API key dialog. Treat the key like a password."><div class="figcaption">The API key dialog. Treat the key like a
+password.</div>
+</div>
+<blockquote>
+<p><strong>Keep this key safe.</strong> Anyone with your API key can act
+on the Datastore as you. Don’t paste it into shared documents, don’t
+commit it to a Git repository, and don’t share it in screenshots or chat
+messages.</p>
+</blockquote>
+</div>
+<div class="section level2">
+<h2 id="store-your-key-so-r-can-use-it">5. Store your key so R can use it<a class="anchor" aria-label="anchor" href="#store-your-key-so-r-can-use-it"></a>
+</h2>
+<p>The cleanest way to use the key with <code>ldndatar2</code> is to
+save it as an environment variable called <code>LDS_API_KEY</code>. That
+way it isn’t sitting in your R scripts where it might be shared by
+accident.</p>
+<p>The easiest place to set it is your user-level <code>.Renviron</code>
+file. From an R session, run:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Greater-London-Authority/ldndatar2" class="external-link">ldndatar2</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This opens <code>.Renviron</code> in your editor. Add a single
+line:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="dt">LDS_API_KEY</span><span class="ot">=</span><span class="st">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span></span></code></pre></div>
+<p>Replace the example value with the key you just copied. Save the file
+and <strong>restart R</strong> (in RStudio: <em>Session → Restart
+R</em>) so the new variable is picked up.</p>
+<p>You can check it’s working by running:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LDS_API_KEY"</span><span class="op">)</span></span></code></pre></div>
+<p>R should print your key back to you.</p>
+</div>
+<div class="section level2">
+<h2 id="use-it-with-ldndatar2">6. Use it with <code>ldndatar2</code><a class="anchor" aria-label="anchor" href="#use-it-with-ldndatar2"></a>
+</h2>
+<p>You can now pass the key to any <code>ldndatar2</code> function that
+needs it. For example, to download metadata for a private dataset:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Greater-London-Authority/ldndatar2" class="external-link">ldndatar2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lds2_meta_dataset.html">lds_download_metadata</a></span><span class="op">(</span></span>
+<span>  slug <span class="op">=</span> <span class="st">"your-private-dataset-slug"</span>,</span>
+<span>  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LDS_API_KEY"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Or to add a new resource to a dataset you own:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/lds_add_resource.html">lds_add_resource</a></span><span class="op">(</span></span>
+<span>  slug    <span class="op">=</span> <span class="st">"your-dataset-slug"</span>,</span>
+<span>  path    <span class="op">=</span> <span class="st">"path/to/your-file.csv"</span>,</span>
+<span>  title   <span class="op">=</span> <span class="st">"Your resource title"</span>,</span>
+<span>  api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"LDS_API_KEY"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="if-something-goes-wrong">If something goes wrong<a class="anchor" aria-label="anchor" href="#if-something-goes-wrong"></a>
+</h2>
+<ul>
+<li>
+<strong>The Manage button does nothing.</strong> Make sure you’re
+signed in — your email address should be shown at the top of the Profile
+page.</li>
+<li>
+<strong>The API call returns a 401 or 403 error.</strong>
+Double-check the key is copied in full with no extra spaces, and that
+you restarted R after editing <code>.Renviron</code>.</li>
+<li>
+<strong>You’ve lost or leaked your key.</strong> Go back to the API
+key dialog (steps 3 and 4) and use the <strong>⋮</strong> menu next to
+the key to regenerate it. The old key will stop working
+immediately.</li>
+</ul>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
