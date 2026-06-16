@@ -232,3 +232,109 @@ test_that("earliest failing assertion is reported when multiple args are bad", {
     "file_path"
   )
 })
+
+mock_metadata <- data.frame(
+  id = rep("idxxx", 3),
+  slug = rep("slug", 3),
+  sharing = c("public", "private", "public"),
+  resource_title = c("report.pdf", "data.csv", "text.txt"),
+  resource_id = c("r1", "r2", "r3"),
+  stringsAsFactors = FALSE
+)
+
+testthat::test_that("successfull calls return invisible", {
+  mock_http <- function(status) {
+    function(...) {
+      httr2::response(
+        status_code = status,
+        headers = list(`Content-Type` = "application/json"),
+        body = charToRaw('{"id": "r_new", "title": "report.pdf"}')
+      )
+    }
+  }
+
+  tmp <- withr::local_tempfile(pattern = "report_mmyy", fileext = ".pdf")
+  writeLines("a,b\n1,2", tmp)
+
+  testthat::expect_invisible(
+    testthat::with_mocked_bindings(
+      lds_download_metadata = function(...) mock_metadata,
+      testthat::with_mocked_bindings(
+        req_perform = mock_http(200),
+        .package = "httr2",
+        result <- lds_add_resource(
+          file_path = tmp,
+          slug = "slug",
+          res_title = basename(tmp),
+          api_key = "api_key"
+        )
+      )
+    )
+  )
+})
+
+
+testthat::test_that("calls that should raise errors / warning ", {
+  mock_http_error <- function(status) {
+    function(...) {
+      httr2::response(
+        status_code = status,
+        body = charToRaw("Internal Server Error")
+      )
+    }
+  }
+
+  tmp <- withr::local_tempfile(pattern = "report_mmyy", fileext = ".pdf")
+  writeLines("a,b\n1,2", tmp)
+
+  testthat::expect_error(
+    testthat::with_mocked_bindings(
+      lds_download_metadata = function(...) mock_metadata,
+      testthat::with_mocked_bindings(
+        req_perform = mock_http_error(403),
+        .package = "httr2",
+        result <- lds_add_resource(
+          file_path = tmp,
+          slug = "slug",
+          res_title = basename(tmp),
+          api_key = "api_key"
+        )
+      )
+    ),
+    "Access denied. Check that your API key has write permissions."
+  )
+
+  testthat::expect_error(
+    testthat::with_mocked_bindings(
+      lds_download_metadata = function(...) mock_metadata,
+      testthat::with_mocked_bindings(
+        req_perform = mock_http_error(404),
+        .package = "httr2",
+        result <- lds_add_resource(
+          file_path = tmp,
+          slug = "slug",
+          res_title = basename(tmp),
+          api_key = "api_key"
+        )
+      )
+    ),
+    "Dataset with slug 'slug' was not found."
+  )
+
+  testthat::expect_error(
+    testthat::with_mocked_bindings(
+      lds_download_metadata = function(...) mock_metadata,
+      testthat::with_mocked_bindings(
+        req_perform = mock_http_error(500),
+        .package = "httr2",
+        result <- lds_add_resource(
+          file_path = tmp,
+          slug = "slug",
+          res_title = basename(tmp),
+          api_key = "api_key"
+        )
+      )
+    ),
+    "Failed to add resource \\(HTTP 500\\): Internal Server Error"
+  )
+})
