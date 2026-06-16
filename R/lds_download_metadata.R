@@ -110,7 +110,7 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   ######  Build the meta data dataframe.
 
   meta_data <- meta_data |>
-    dplyr::select(-join) |>
+    dplyr::select(-"join") |>
     dplyr::mutate_if(
       is.character,
       ~ ifelse(. == "" | . == "null" | . == "[]", NA, .)
