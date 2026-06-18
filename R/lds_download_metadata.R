@@ -14,7 +14,7 @@
 #' @import dplyr
 #' @importFrom checkmate assert_string assert_logical
 #' @importFrom glue glue
-#' @importFrom rlang .data
+#' @importFrom rlang is_empty
 #' @importFrom httr2 request req_headers req_perform resp_status resp_body_json
 #' @importFrom purrr list_flatten
 lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
@@ -110,7 +110,7 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   ######  Build the meta data dataframe.
 
   meta_data <- meta_data |>
-    dplyr::select(-.data$join) |>
+    dplyr::select(-"join") |>
     dplyr::mutate_if(
       is.character,
       ~ ifelse(. == "" | . == "null" | . == "[]", NA, .)

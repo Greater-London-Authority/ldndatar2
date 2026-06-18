@@ -47,7 +47,9 @@ lds_replace_resource <- function(
   # Check that resource exits
   all_metadata <- lds_metadata(type = "resources")
   resource_metadata <- all_metadata[
-    all_metadata$dataset_id == slug & all_metadata$title == resource_name,
+    all_metadata$dataset_id == slug &
+      all_metadata$title == resource_name &
+      all_metadata$id == resource_id,
   ]
 
   if (nrow(resource_metadata) == 0) {
@@ -89,3 +91,7 @@ lds_replace_resource <- function(
   }
   invisible(response)
 }
+
+# Require for mocking base functions, from `testthat` docs
+# https://testthat.r-lib.org/articles/mocking.html#:~:text=That%20means%20if%20you%20want,doesn't%20affect%20ordinary%20calls.
+readline <- NULL
