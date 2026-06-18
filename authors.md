@@ -12,13 +12,13 @@ Source:
 [`DESCRIPTION`](https://github.com/Greater-London-Authority/ldndatar2/blob/dev/DESCRIPTION)
 
 Slade M, Bahia I (2026). *ldndatar2: Access London Datastore Data and
-Resources*. R package version 0.0.0.9000,
+Resources*. R package version 0.0.0.9001,
 <https://github.com/Greater-London-Authority/ldndatar2>.
 
     @Manual{,
       title = {ldndatar2: Access London Datastore Data and Resources},
       author = {Micheal Slade and Izabel Bahia},
       year = {2026},
-      note = {R package version 0.0.0.9000},
+      note = {R package version 0.0.0.9001},
       url = {https://github.com/Greater-London-Authority/ldndatar2},
     }
