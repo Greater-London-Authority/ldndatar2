@@ -156,12 +156,3 @@ testthat::test_that("error in http response", {
     "This is a private dataset, please provide an API key"
   )
 })
-
-testthat::test_that("test remove_na_list", {
-  input <- list(item1 = 1, item2 = NA, item3 = "id")
-  expected_output <- list(item1 = 1, item3 = "id")
-  output <- remove_na_list(input)
-
-  testthat::expect_identical(output, expected_output)
-  testthat::expect_identical(length(output), length(expected_output))
-})

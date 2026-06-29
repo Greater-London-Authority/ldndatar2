@@ -18,8 +18,7 @@ lds_add_resource(
 \arguments{
 \item{file_path}{Path to the file to upload.}
 
-\item{slug}{URL slug of the dataset –
-\verb{https://data.london.gov.uk/dataset/<slug>}.}
+\item{slug}{URL slug of the dataset - \verb{https://data.london.gov.uk/dataset/<slug>}.}
 
 \item{api_key}{London Datastore API key (required for write operations).}
 

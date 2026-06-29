@@ -1,5 +1,5 @@
-#' @title lds_patch_description
-#' @description Updates description page of an existing dataset on the London Datastore/.
+#' @title Patch a dataset description
+#' @description Updates the description page of an existing dataset on the London Datastore.
 #' @param slug A character, url slug of the dataset - https://data.london.gov.uk/dataset/<slug>
 #' @param patch A character, output of `lds_description_render()`
 #' @param api_key A character. London Datastore API key - needed to amend a dataset.

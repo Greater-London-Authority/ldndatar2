@@ -1,7 +1,7 @@
-#' @title lds_description_render
-#' @description Render the input file to html suitable to be used in the description field of a dataset on the London DataStore.
+#' @title Render a description file to Datastore HTML
+#' @description Render the input file to html suitable to be used in the description field of a dataset on the London Datastore.
 #' @param input The input file to be rendered. This can be an R script (.R), an R Markdown document (.Rmd), or a plain markdown document.
-#' @param include_title Include the YAML title in the output, Default: TRUE
+#' @param include_title Include the YAML title in the output, Default: FALSE
 #' @param ... Other parameters passed to rmarkdown::render
 #' @return By default will return the rendered html string.
 #' @details A markdown version of the input file is also rendered and saved.
@@ -19,7 +19,7 @@ lds_description_render <- function(
   include_title = FALSE,
   ...
 ) {
-  checkmate::assert_file_exists(input, extension = c("R ", "Rmd", "md"))
+  checkmate::assert_file_exists(input, extension = c("R", "Rmd", "md"))
 
   dir <- tempdir()
 

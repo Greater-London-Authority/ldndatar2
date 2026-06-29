@@ -1,7 +1,7 @@
-#' @title lds_download_resource
+#' @title Download a dataset resource
 #' @description Downloads resource using URL for a specified resource.
 #' This function replaces the `lds_resource_url` from the original `ldndatar` package.
-#' Because of new authentical we need to download the file after request.
+#' Because of the new authentication the file has to be downloaded after the request.
 #' @param slug A URL slug of the dataset - https://data.london.gov.uk/dataset/<slug>
 #' @param dir Where to save the output. Default: current working directory
 #' @param res_title The title of the resource, Default: NULL

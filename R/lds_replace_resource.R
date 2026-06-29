@@ -2,13 +2,13 @@
 #'
 #' @description
 #' Replaces a resource (file) in the London Datastore dataset.
-#' This function should be use to replace files with with the same name (title).
-#' If file names don't match, user is encourage to call `lds_add_resource` instead.
+#' Use this to replace files that keep the same name (title).
+#' If the file names don't match, call `lds_add_resource()` instead.
 #' For security reasons, it requires file name and id, and it prompts the user to confirm operation.
 #' Requires an API key with write access.
 #'
 #' @param file_path A character - path where file to replace is located.
-#' @param slug URL slug of the dataset – `https://data.london.gov.uk/dataset/<slug>`.
+#' @param slug URL slug of the dataset - `https://data.london.gov.uk/dataset/<slug>`.
 #' @param resource_name A character - the name of the file to be deleted.
 #' @param resource_id A character, the resource id.
 #' @param api_key London Datastore API key (required for write operations).
@@ -22,7 +22,7 @@
 #'   slug = "my-dataset",
 #'   resource_name = "my_data.csv",
 #'   resource_id = "xxx",
-#'   api_key = Sys.getenv("LDS_API_KEY"),
+#'   api_key = Sys.getenv("LDS_API_KEY")
 #' )
 #' }
 #'
@@ -39,12 +39,12 @@ lds_replace_resource <- function(
   api_key
 ) {
   checkmate::assert_file_exists(file_path)
-  checkmate::assert_string(slug, n.char = 5)
+  checkmate::assert_string(slug, min.chars = 1L)
   checkmate::assert_string(resource_name)
   checkmate::assert_string(resource_id)
   checkmate::assert_string(api_key)
 
-  # Check that resource exits
+  # Check that the resource exists
   all_metadata <- lds_metadata(type = "resources")
   resource_metadata <- all_metadata[
     all_metadata$dataset_id == slug &
@@ -83,7 +83,7 @@ lds_replace_resource <- function(
       httr2::req_perform()
 
     httr2::resp_check_status(response)
-    print(paste("Resource", file_name, "updated successfully."))
+    message("Resource ", file_name, " updated successfully.")
   } else if (confirmation == 2) {
     stop("Operation aborted.")
   } else {

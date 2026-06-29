@@ -5,8 +5,7 @@
 #' Datastore. Requires an API key with write access.
 #'
 #' @param file_path Path to the file to upload.
-#' @param slug URL slug of the dataset –
-#'   `https://data.london.gov.uk/dataset/<slug>`.
+#' @param slug URL slug of the dataset - `https://data.london.gov.uk/dataset/<slug>`.
 #' @param api_key London Datastore API key (required for write operations).
 #' @param res_title Resource title. If `NULL`, the file name is used.
 #'   Default: `NULL`.
@@ -33,7 +32,7 @@
 #'
 #' @export
 #' @rdname lds_add_resource
-#' @importFrom checkmate assert_file_exists assert_string assert_date
+#' @importFrom checkmate assert_file_exists assert_string
 #' @importFrom glue glue
 #' @importFrom stringr str_extract
 #' @importFrom dplyr pull filter

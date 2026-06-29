@@ -26,7 +26,7 @@ test_that("input must have an allowed extension", {
 # NOTE: lds_description_render() uses the shared tempdir() and globs *.html
 # from it, so consecutive calls in the same R session collide. We clear stale
 # .html files before each render as a workaround. This is a latent bug in the
-# function — output should be confined to a per-call subdirectory.
+# function, output should be confined to a per-call subdirectory.
 
 clean_html_tempdir <- function() {
   unlink(list.files(tempdir(), pattern = "\\.html$", full.names = TRUE))

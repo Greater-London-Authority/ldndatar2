@@ -5,8 +5,8 @@
 #' For security reasons, it requires file name and id, and it prompts the user to confirm operation.
 #' Requires an API key with write access.
 #'
-#' @param resource_name A character - the name of the file to be deleted.
-#' @param slug URL slug of the dataset – `https://data.london.gov.uk/dataset/<slug>`.
+#' @param slug URL slug of the dataset - `https://data.london.gov.uk/dataset/<slug>`.
+#' @param resource_name A character, the name of the file to be deleted.
 #' @param resource_id A character, the resource id.
 #' @param api_key London Datastore API key (required for write operations).
 #'
@@ -18,17 +18,16 @@
 #'   resource_name = "my_data.csv",
 #'   slug = "my-dataset",
 #'   resource_id = "xxx",
-#'   api_key = Sys.getenv("LDS_API_KEY"),
+#'   api_key = Sys.getenv("LDS_API_KEY")
 #' )
 #' }
 #'
 #' @export
 #' @rdname lds_delete_resource
-#' @importFrom checkmate assert_file_exists assert_string assert_date
 #' @importFrom checkmate assert_string
 #' @importFrom httr2 request req_method req_headers req_body_json req_perform resp_check_status
 lds_delete_resource <- function(slug, resource_name, resource_id, api_key) {
-  checkmate::assert_string(slug, n.char = 5)
+  checkmate::assert_string(slug, min.chars = 1L)
   checkmate::assert_string(resource_name)
   checkmate::assert_string(resource_id)
   checkmate::assert_string(api_key)
@@ -73,7 +72,7 @@ lds_delete_resource <- function(slug, resource_name, resource_id, api_key) {
 
     lds_patch_dataset_timestamp(slug = slug, api_key = api_key)
 
-    print(paste("Resource", resource_name, "deleted successfully."))
+    message("Resource ", resource_name, " deleted successfully.")
   } else if (confirmation == 2) {
     stop("Deletion aborted.")
   } else {

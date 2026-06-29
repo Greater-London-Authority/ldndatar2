@@ -9,7 +9,7 @@ lds_replace_resource(file_path, slug, resource_name, resource_id, api_key)
 \arguments{
 \item{file_path}{A character - path where file to replace is located.}
 
-\item{slug}{URL slug of the dataset – \verb{https://data.london.gov.uk/dataset/<slug>}.}
+\item{slug}{URL slug of the dataset - \verb{https://data.london.gov.uk/dataset/<slug>}.}
 
 \item{resource_name}{A character - the name of the file to be deleted.}
 
@@ -22,8 +22,8 @@ The parsed JSON response from the API (invisibly).
 }
 \description{
 Replaces a resource (file) in the London Datastore dataset.
-This function should be use to replace files with with the same name (title).
-If file names don't match, user is encourage to call \code{lds_add_resource} instead.
+Use this to replace files that keep the same name (title).
+If the file names don't match, call \code{lds_add_resource()} instead.
 For security reasons, it requires file name and id, and it prompts the user to confirm operation.
 Requires an API key with write access.
 }
@@ -34,7 +34,7 @@ lds_replace_resource(
   slug = "my-dataset",
   resource_name = "my_data.csv",
   resource_id = "xxx",
-  api_key = Sys.getenv("LDS_API_KEY"),
+  api_key = Sys.getenv("LDS_API_KEY")
 )
 }
 

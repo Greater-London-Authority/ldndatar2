@@ -86,7 +86,7 @@ test_that("res_title must be NULL or a non-empty string", {
   tmp <- withr::local_tempfile(fileext = ".csv")
   writeLines("a,b\n1,2", tmp)
 
-  # NULL is fine (tested implicitly — it's the default)
+  # NULL is fine (tested implicitly, it's the default)
   # but an empty string should fail
 
   expect_error(

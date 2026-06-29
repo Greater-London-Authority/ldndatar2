@@ -7,9 +7,9 @@
 lds_delete_resource(slug, resource_name, resource_id, api_key)
 }
 \arguments{
-\item{slug}{URL slug of the dataset – \verb{https://data.london.gov.uk/dataset/<slug>}.}
+\item{slug}{URL slug of the dataset - \verb{https://data.london.gov.uk/dataset/<slug>}.}
 
-\item{resource_name}{A character - the name of the file to be deleted.}
+\item{resource_name}{A character, the name of the file to be deleted.}
 
 \item{resource_id}{A character, the resource id.}
 
@@ -29,7 +29,7 @@ lds_delete_resource(
   resource_name = "my_data.csv",
   slug = "my-dataset",
   resource_id = "xxx",
-  api_key = Sys.getenv("LDS_API_KEY"),
+  api_key = Sys.getenv("LDS_API_KEY")
 )
 }
 
