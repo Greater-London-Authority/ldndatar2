@@ -14,11 +14,11 @@ lds_delete_resource(slug, resource_name, resource_id, api_key)
 
 - slug:
 
-  URL slug of the dataset – `https://data.london.gov.uk/dataset/<slug>`.
+  URL slug of the dataset - `https://data.london.gov.uk/dataset/<slug>`.
 
 - resource_name:
 
-  A character - the name of the file to be deleted.
+  A character, the name of the file to be deleted.
 
 - resource_id:
 
@@ -38,9 +38,9 @@ The parsed JSON response from the API (invisibly).
 if (FALSE) { # \dontrun{
 lds_delete_resource(
   resource_name = "my_data.csv",
-  slug = "my-dataset",
+  slug = "2o8xw",
   resource_id = "xxx",
-  api_key = Sys.getenv("LDS_API_KEY"),
+  api_key = Sys.getenv("LDS_API_KEY")
 )
 } # }
 ```

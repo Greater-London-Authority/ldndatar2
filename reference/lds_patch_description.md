@@ -1,7 +1,7 @@
-# lds_patch_description
+# Patch a dataset description
 
-Updates description page of an existing dataset on the London
-Datastore/.
+Updates the description page of an existing dataset on the London
+Datastore.
 
 ## Usage
 

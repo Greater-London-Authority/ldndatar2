@@ -1,4 +1,4 @@
-# lds_metadata
+# Fetch Datastore metadata
 
 Fetch all available meta data
 
@@ -12,7 +12,7 @@ lds_metadata(type = "resources")
 
 - type:
 
-  The type of meta data to be returned "resources", "datasets", "teams"
+  A character, the metadata to return: "resources", "datasets", "teams"
   or "topics"
 
 ## Value

@@ -1,7 +1,7 @@
-# lds_description_render
+# Render a description file to Datastore HTML
 
 Render the input file to html suitable to be used in the description
-field of a dataset on the London DataStore.
+field of a dataset on the London Datastore.
 
 ## Usage
 
@@ -18,7 +18,7 @@ lds_description_render(input, include_title = FALSE, ...)
 
 - include_title:
 
-  Include the YAML title in the output, Default: TRUE
+  Include the YAML title in the output, Default: FALSE
 
 - ...:
 

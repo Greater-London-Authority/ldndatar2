@@ -26,7 +26,7 @@ lds_add_resource(
 
 - slug:
 
-  URL slug of the dataset – `https://data.london.gov.uk/dataset/<slug>`.
+  URL slug of the dataset - `https://data.london.gov.uk/dataset/<slug>`.
 
 - api_key:
 
@@ -63,7 +63,7 @@ The parsed JSON response from the API (invisibly).
 if (FALSE) { # \dontrun{
 lds_add_resource(
   file_path = "data/my_data.csv",
-  slug = "my-dataset",
+  slug = "2o8xw",
   api_key = Sys.getenv("LDS_API_KEY"),
   res_title = "My Data CSV",
   description = "Monthly counts of things"

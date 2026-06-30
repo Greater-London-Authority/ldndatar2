@@ -1,8 +1,9 @@
-# lds_download_resource
+# Download a dataset resource
 
 Downloads resource using URL for a specified resource. This function
 replaces the `lds_resource_url` from the original `ldndatar` package.
-Because of new authentical we need to download the file after request.
+Because of the new authentication the file has to be downloaded after
+the request.
 
 ## Usage
 

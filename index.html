@@ -91,7 +91,7 @@
 <span><span class="va">resources</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lds_metadata.html">lds_metadata</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"resources"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Download metadata for a specific dataset</span></span>
-<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lds2_meta_dataset.html">lds_download_metadata</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="st">"your-dataset-slug"</span><span class="op">)</span></span>
+<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lds_download_metadata.html">lds_download_metadata</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="st">"your-dataset-slug"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Download a resource to your working directory (folder)</span></span>
 <span><span class="fu"><a href="reference/lds_download_resource.html">lds_download_resource</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="st">"your-dataset-slug"</span><span class="op">)</span></span></code></pre></div>
@@ -101,7 +101,7 @@
 <p>Some datasets on the London Datastore are private and require an API key. See <code><a href="articles/get_london_datastore_api_key.html">vignette("get_london_datastore_api_key")</a></code> for instructions on obtaining one.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Access a private dataset using an API key</span></span>
-<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lds2_meta_dataset.html">lds_download_metadata</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="st">"private-dataset-slug"</span>, api_key <span class="op">=</span> <span class="st">"your-api-key"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lds_download_metadata.html">lds_download_metadata</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="st">"private-dataset-slug"</span>, api_key <span class="op">=</span> <span class="st">"your-api-key"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
