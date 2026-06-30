@@ -7,10 +7,15 @@ pak::lockfile_create(
     "here",
     "testthat",
     "checkmate",
+    "dplyr",
     "devtools",
     "glue",
     "janitor",
-    "lubridate"
+    "lubridate",
+    "markdown",
+    "rlang",
+    "rmarkdown",
+    "stringr"
   ),
   upgrade = FALSE,
   dependencies = NA,
@@ -22,7 +27,7 @@ pak::lockfile_install(lockfile = "pkg.lock")
 usethis::use_vignette(name = "get_london_datastore_api_jey")
 usethis::use_data_raw()
 usethis::use_r("data")
-usethis::use_r("lds_meta_data")
+usethis::use_r("lds_metadata")
 
 devtools::load_all() # loads all the functions in the package
 

@@ -34,19 +34,20 @@
 #' @export
 #' @rdname lds_add_resource
 #' @importFrom checkmate assert_file_exists assert_string assert_date
-#'   assert_logical
 #' @importFrom glue glue
 #' @importFrom stringr str_extract
 #' @importFrom dplyr pull filter
 #' @importFrom rlang .data
-lds_add_resource <- function(file_path,
-                             slug,
-                             api_key,
-                             res_title = NULL,
-                             description = NULL,
-                             temporal_coverage_from = NULL,
-                             temporal_coverage_to = NULL,
-                             update_timestamp = TRUE) {
+lds_add_resource <- function(
+  file_path,
+  slug,
+  api_key,
+  res_title = NULL,
+  description = NULL,
+  temporal_coverage_from = NULL,
+  temporal_coverage_to = NULL,
+  update_timestamp = TRUE
+) {
   # ---- Input validation ----
   checkmate::assert_file_exists(file_path)
   checkmate::assert_string(slug, min.chars = 1L)
@@ -82,7 +83,6 @@ lds_add_resource <- function(file_path,
     warning("This is not a private dataset.")
   }
 
-
   # ---- Derive resource title from file name if not provided ----
   if (is.null(res_title)) {
     res_title <- stringr::str_extract(file_path, "[^/]+$")
@@ -104,7 +104,7 @@ lds_add_resource <- function(file_path,
   # ---- Build multipart body ----
   body <- list(
     title = res_title,
-    file  = curl::form_file(file_path)
+    file = curl::form_file(file_path)
   )
 
   if (!is.null(description)) {

@@ -8,7 +8,7 @@
 resources from the [London Datastore](https://data.london.gov.uk). This package
 is an updated successor to the original `ldndatar` package, utilising the
 current London Datastore API. It allows users to programmatically catalogue,
-query, and retrieve datasets published by the Greater London Authority and
+query, retrieve and update datasets and resources published by the Greater London Authority and
 partner organisations.
 
 ## Installation
@@ -34,15 +34,15 @@ remotes::install_github("Greater-London-Authority/ldndatar2")
 library(ldndatar2)
 
 # Browse available datasets
-datasets <- lds_meta_data(type = "datasets")
+datasets <- lds_metadata(type = "datasets")
 
 # Browse available resources
-resources <- lds_meta_data(type = "resources")
+resources <- lds_metadata(type = "resources")
 
 # Download metadata for a specific dataset
 metadata <- lds_download_metadata(slug = "your-dataset-slug")
 
-# Download a resource to your working directory
+# Download a resource to your working directory (folder)
 lds_download_resource(slug = "your-dataset-slug")
 ```
 

@@ -1,0 +1,49 @@
+[
+  {
+    "webpage": "https://data.london.gov.uk/dataset/ldndatar2-test-fetch-all-api-metadata-2xxx0",
+    "id": "2xxx0",
+    "description": "<p> Mocking API call</p>",
+    "title": "Mocking API call",
+    "createdAt": "2001-01-01T00:00:00.000Z",
+    "updatedAt": "2001-01-01T00:00:00.000Z",
+    "nextReviewDate": null,
+    "sharing": "public",
+    "masthead": {
+      "id": "gla",
+      "title": "Greater London Authority"
+    },
+    "team": {
+      "id": "53oj7",
+      "title": "Greater London Authority"
+    },
+    "topics": [
+      {
+        "id": "transport",
+        "title": "Transport"
+      }
+    ],
+    "tags": [
+      "visualisation-data"
+    ],
+    "licence": null,
+    "contact": null,
+    "resources": [
+      {
+        "dataset": "2goo0",
+        "webpage": "https://data.london.gov.uk/dataset/ldndatar2-test-fetch-all-api-metadata-2xxx0",
+        "id": "b71acf1c-1fc4-4aea-9e6b-22b8996741ee",
+        "title": "gla-ldndatar2-test.json",
+        "url": "https://data.london.gov.uk/download/ldndatar2-test-fetch-all-api-metadata-2xxx0",
+        "description": "",
+        "timeframeFrom": null,
+        "timeframeTo": null,
+        "size": 2000,
+        "hash": "2398a191402fb1adaf4816b735e55fd6",
+        "timestamp": "2019-07-19T16:00:56",
+        "filename": "gla-ldndatar2-test.json"
+      }
+    ],
+    "links": [],
+    "custom": {}
+  }
+]

@@ -8,3 +8,6 @@
 ^LICENSE\.md$
 ^\.lintr$
 ^dev-init\.R$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
