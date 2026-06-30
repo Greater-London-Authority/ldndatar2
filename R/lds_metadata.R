@@ -1,6 +1,6 @@
-#' @title lds_metadata
+#' @title Fetch Datastore metadata
 #' @description Fetch all available meta data
-#' @param type <character> The type of meta data to be returned "resources", "datasets", "teams" or "topics"
+#' @param type A character, the metadata to return: "resources", "datasets", "teams" or "topics"
 #' @return A dataframe.
 #' @importFrom checkmate assert_choice
 #' @importFrom glue glue

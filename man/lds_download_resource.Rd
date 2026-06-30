@@ -2,7 +2,7 @@
 % Please edit documentation in R/lds_download_resource.R
 \name{lds_download_resource}
 \alias{lds_download_resource}
-\title{lds_download_resource}
+\title{Download a dataset resource}
 \usage{
 lds_download_resource(
   slug,
@@ -29,5 +29,5 @@ A URL string of the resource
 \description{
 Downloads resource using URL for a specified resource.
 This function replaces the \code{lds_resource_url} from the original \code{ldndatar} package.
-Because of new authentical we need to download the file after request.
+Because of the new authentication the file has to be downloaded after the request.
 }

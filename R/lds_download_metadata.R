@@ -1,4 +1,4 @@
-#' @title lds_download_metadata
+#' @title Download dataset metadata
 #'
 #' @description
 #' Adapted from the original ldndatar pkg.
@@ -10,7 +10,6 @@
 #' @param inc_tables whether to include data on any tables in the dataset, Default: FALSE
 #' @return A tibble of metadata
 #' @export
-#' @rdname lds2_meta_dataset
 #' @import dplyr
 #' @importFrom checkmate assert_string assert_logical
 #' @importFrom glue glue
@@ -19,7 +18,7 @@
 #' @importFrom purrr list_flatten
 lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   # Checkmate type checks
-  checkmate::assert_string(slug)
+  checkmate::assert_string(slug, n.chars = 5L)
   checkmate::assert_string(api_key, null.ok = TRUE)
   checkmate::assert_logical(inc_tables)
 
@@ -155,16 +154,6 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
 remove_null_list <- function(l) {
   for (item in names(l)) {
     if (is.null(l[[item]]) || rlang::is_empty(l[[item]])) {
-      l[[item]] <- NULL
-    }
-  }
-  return(l)
-}
-
-
-remove_na_list <- function(l) {
-  for (item in names(l)) {
-    if (is.na(l[[item]])) {
       l[[item]] <- NULL
     }
   }
