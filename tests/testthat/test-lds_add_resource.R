@@ -4,7 +4,7 @@ test_that("file_path must exist on disk", {
   expect_error(
     lds_add_resource(
       file_path = "totally/nonexistent/file.csv",
-      slug = "some-dataset",
+      slug = "abcde",
       api_key = "test-key-123"
     ),
     "file_path"
@@ -15,7 +15,7 @@ test_that("file_path rejects non-string types", {
   expect_error(
     lds_add_resource(
       file_path = 123,
-      slug = "some-dataset",
+      slug = "abcde",
       api_key = "test-key-123"
     ),
     "file_path"
@@ -24,7 +24,7 @@ test_that("file_path rejects non-string types", {
   expect_error(
     lds_add_resource(
       file_path = NULL,
-      slug = "some-dataset",
+      slug = "abcde",
       api_key = "test-key-123"
     ),
     "file_path"
@@ -65,17 +65,17 @@ test_that("api_key must be a non-empty string", {
   writeLines("a,b\n1,2", tmp)
 
   expect_error(
-    lds_add_resource(file_path = tmp, slug = "ds", api_key = ""),
+    lds_add_resource(file_path = tmp, slug = "abcde", api_key = ""),
     "api_key"
   )
 
   expect_error(
-    lds_add_resource(file_path = tmp, slug = "ds", api_key = 999),
+    lds_add_resource(file_path = tmp, slug = "abcde", api_key = 999),
     "api_key"
   )
 
   expect_error(
-    lds_add_resource(file_path = tmp, slug = "ds", api_key = NULL),
+    lds_add_resource(file_path = tmp, slug = "abcde", api_key = NULL),
     "api_key"
   )
 })
@@ -92,7 +92,7 @@ test_that("res_title must be NULL or a non-empty string", {
   expect_error(
     lds_add_resource(
       file_path = tmp,
-      slug = "ds",
+      slug = "abcde",
       api_key = "key",
       res_title = ""
     ),
@@ -102,7 +102,7 @@ test_that("res_title must be NULL or a non-empty string", {
   expect_error(
     lds_add_resource(
       file_path = tmp,
-      slug = "ds",
+      slug = "abcde",
       api_key = "key",
       res_title = 123
     ),
@@ -119,7 +119,7 @@ test_that("description must be NULL or a string", {
   expect_error(
     lds_add_resource(
       file_path = tmp,
-      slug = "ds",
+      slug = "abcde",
       api_key = "key",
       description = 42
     ),
@@ -136,7 +136,7 @@ test_that("temporal_coverage_from must be NULL, a Date, or a string", {
   expect_error(
     lds_add_resource(
       file_path = tmp,
-      slug = "ds",
+      slug = "abcde",
       api_key = "key",
       temporal_coverage_from = 12345
     ),
@@ -146,7 +146,7 @@ test_that("temporal_coverage_from must be NULL, a Date, or a string", {
   expect_error(
     lds_add_resource(
       file_path = tmp,
-      slug = "ds",
+      slug = "abcde",
       api_key = "key",
       temporal_coverage_from = TRUE
     ),
@@ -161,7 +161,7 @@ test_that("temporal_coverage_to must be NULL, a Date, or a string", {
   expect_error(
     lds_add_resource(
       file_path = tmp,
-      slug = "ds",
+      slug = "abcde",
       api_key = "key",
       temporal_coverage_to = list("bad")
     ),
@@ -178,7 +178,7 @@ test_that("update_timestamp must be a single logical value", {
   expect_error(
     lds_add_resource(
       file_path = tmp,
-      slug = "ds",
+      slug = "abcde",
       api_key = "key",
       update_timestamp = "yes"
     ),
@@ -188,7 +188,7 @@ test_that("update_timestamp must be a single logical value", {
   expect_error(
     lds_add_resource(
       file_path = tmp,
-      slug = "ds",
+      slug = "abcde",
       api_key = "key",
       update_timestamp = NA
     ),
@@ -198,7 +198,7 @@ test_that("update_timestamp must be a single logical value", {
   expect_error(
     lds_add_resource(
       file_path = tmp,
-      slug = "ds",
+      slug = "abcde",
       api_key = "key",
       update_timestamp = c(TRUE, FALSE)
     ),
@@ -217,7 +217,7 @@ test_that("res_title defaults to the file name extracted from file_path", {
 
   httptest2::without_internet({
     expect_error(
-      lds_add_resource(file_path = tmp, slug = "ds", api_key = "fake-key"),
+      lds_add_resource(file_path = tmp, slug = "abcde", api_key = "fake-key"),
       class = "httptest2_request"
     )
   })
@@ -264,7 +264,7 @@ testthat::test_that("successfull calls return invisible", {
         .package = "httr2",
         result <- lds_add_resource(
           file_path = tmp,
-          slug = "slug",
+          slug = "abcde",
           res_title = basename(tmp),
           api_key = "api_key"
         )
@@ -295,7 +295,7 @@ testthat::test_that("calls that should raise errors / warning ", {
         .package = "httr2",
         result <- lds_add_resource(
           file_path = tmp,
-          slug = "slug",
+          slug = "abcde",
           res_title = basename(tmp),
           api_key = "api_key"
         )
@@ -312,13 +312,13 @@ testthat::test_that("calls that should raise errors / warning ", {
         .package = "httr2",
         result <- lds_add_resource(
           file_path = tmp,
-          slug = "slug",
+          slug = "abcde",
           res_title = basename(tmp),
           api_key = "api_key"
         )
       )
     ),
-    "Dataset with slug 'slug' was not found."
+    "Dataset with slug 'abcde' was not found."
   )
 
   testthat::expect_error(
@@ -329,7 +329,7 @@ testthat::test_that("calls that should raise errors / warning ", {
         .package = "httr2",
         result <- lds_add_resource(
           file_path = tmp,
-          slug = "slug",
+          slug = "abcde",
           res_title = basename(tmp),
           api_key = "api_key"
         )

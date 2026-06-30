@@ -17,7 +17,7 @@ lds_download_resource <- function(
   api_key = NULL
 ) {
   # Input validation
-  checkmate::assert_string(slug)
+  checkmate::assert_string(slug, n.chars = 5L)
   checkmate::assert_string(res_title, null.ok = TRUE)
   checkmate::assert_string(res_id, null.ok = TRUE)
   checkmate::assert_string(api_key, null.ok = TRUE)

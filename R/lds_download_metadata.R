@@ -18,7 +18,7 @@
 #' @importFrom purrr list_flatten
 lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   # Checkmate type checks
-  checkmate::assert_string(slug)
+  checkmate::assert_string(slug, n.chars = 5L)
   checkmate::assert_string(api_key, null.ok = TRUE)
   checkmate::assert_logical(inc_tables)
 

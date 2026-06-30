@@ -23,7 +23,7 @@
 #' \dontrun{
 #' lds_add_resource(
 #'   file_path = "data/my_data.csv",
-#'   slug = "my-dataset",
+#'   slug = "2o8xw",
 #'   api_key = Sys.getenv("LDS_API_KEY"),
 #'   res_title = "My Data CSV",
 #'   description = "Monthly counts of things"
@@ -49,7 +49,7 @@ lds_add_resource <- function(
 ) {
   # ---- Input validation ----
   checkmate::assert_file_exists(file_path)
-  checkmate::assert_string(slug, min.chars = 1L)
+  checkmate::assert_string(slug, n.chars = 5L)
   checkmate::assert_string(api_key, min.chars = 1L)
   checkmate::assert_string(res_title, null.ok = TRUE, min.chars = 1L)
   checkmate::assert_string(description, null.ok = TRUE)

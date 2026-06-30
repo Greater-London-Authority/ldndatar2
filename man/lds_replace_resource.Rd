@@ -31,7 +31,7 @@ Requires an API key with write access.
 \dontrun{
 lds_replace_resource(
   file_path = "path/to/my_data.csv",
-  slug = "my-dataset",
+  slug = "2o8xw",
   resource_name = "my_data.csv",
   resource_id = "xxx",
   api_key = Sys.getenv("LDS_API_KEY")

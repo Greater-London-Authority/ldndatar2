@@ -16,7 +16,7 @@
 #' \dontrun{
 #' lds_delete_resource(
 #'   resource_name = "my_data.csv",
-#'   slug = "my-dataset",
+#'   slug = "2o8xw",
 #'   resource_id = "xxx",
 #'   api_key = Sys.getenv("LDS_API_KEY")
 #' )
@@ -27,7 +27,7 @@
 #' @importFrom checkmate assert_string
 #' @importFrom httr2 request req_method req_headers req_body_json req_perform resp_check_status
 lds_delete_resource <- function(slug, resource_name, resource_id, api_key) {
-  checkmate::assert_string(slug, min.chars = 1L)
+  checkmate::assert_string(slug, n.chars = 5L)
   checkmate::assert_string(resource_name)
   checkmate::assert_string(resource_id)
   checkmate::assert_string(api_key)

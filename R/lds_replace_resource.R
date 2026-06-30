@@ -19,7 +19,7 @@
 #' \dontrun{
 #' lds_replace_resource(
 #'   file_path = "path/to/my_data.csv",
-#'   slug = "my-dataset",
+#'   slug = "2o8xw",
 #'   resource_name = "my_data.csv",
 #'   resource_id = "xxx",
 #'   api_key = Sys.getenv("LDS_API_KEY")
@@ -39,7 +39,7 @@ lds_replace_resource <- function(
   api_key
 ) {
   checkmate::assert_file_exists(file_path)
-  checkmate::assert_string(slug, min.chars = 1L)
+  checkmate::assert_string(slug, n.chars = 5L)
   checkmate::assert_string(resource_name)
   checkmate::assert_string(resource_id)
   checkmate::assert_string(api_key)

@@ -38,17 +38,17 @@ test_that("slug rejects NA", {
 
 test_that("api_key must be NULL or a string", {
   expect_error(
-    lds_download_metadata(slug = "test-dataset", api_key = 123),
+    lds_download_metadata(slug = "abcde", api_key = 123),
     "api_key"
   )
 
   expect_error(
-    lds_download_metadata(slug = "test-dataset", api_key = TRUE),
+    lds_download_metadata(slug = "abcde", api_key = TRUE),
     "api_key"
   )
 
   expect_error(
-    lds_download_metadata(slug = "test-dataset", api_key = c("a", "b")),
+    lds_download_metadata(slug = "abcde", api_key = c("a", "b")),
     "api_key"
   )
 })
@@ -57,17 +57,17 @@ test_that("api_key must be NULL or a string", {
 
 test_that("inc_tables must be logical", {
   expect_error(
-    lds_download_metadata(slug = "test-dataset", inc_tables = "yes"),
+    lds_download_metadata(slug = "abcde", inc_tables = "yes"),
     "inc_tables"
   )
 
   expect_error(
-    lds_download_metadata(slug = "test-dataset", inc_tables = 1),
+    lds_download_metadata(slug = "abcde", inc_tables = 1),
     "inc_tables"
   )
 
   expect_error(
-    lds_download_metadata(slug = "test-dataset", inc_tables = NULL),
+    lds_download_metadata(slug = "abcde", inc_tables = NULL),
     "inc_tables"
   )
 })
@@ -77,7 +77,7 @@ test_that("inc_tables must be logical", {
 test_that("valid inputs pass validation and reach the HTTP layer", {
   httptest2::without_internet({
     expect_error(
-      lds_download_metadata(slug = "nonexistent-slug-xyz-999"),
+      lds_download_metadata(slug = "abcde"),
       class = "httptest2_request"
     )
   })
@@ -87,11 +87,11 @@ test_that("valid inputs pass validation and reach the HTTP layer", {
 #
 # Exercises the post-fetch parsing pipeline: resources flattening, full_join,
 # and date coercion. Fixture lives at
-# tests/testthat/data.london.gov.uk/api/dataset/test-dataset.json
+# tests/testthat/data.london.gov.uk/api/dataset/abcde.json
 
 httptest2::with_mock_api({
   test_that("returns a tibble with top-level + per-resource rows", {
-    result <- lds_download_metadata(slug = "test-dataset")
+    result <- lds_download_metadata(slug = "abcde")
 
     expect_s3_class(result, "tbl_df")
     # One row per resource in the fixture (2 resources)
@@ -133,7 +133,7 @@ testthat::test_that("error in http response", {
     testthat::with_mocked_bindings(
       req_perform = mock_http_error(404),
       .package = "httr2",
-      lds_download_metadata(slug = "slug", api_key = "api_key"),
+      lds_download_metadata(slug = "abcde", api_key = "api_key"),
     ),
     "This dataset does not exist"
   )
@@ -142,7 +142,7 @@ testthat::test_that("error in http response", {
     testthat::with_mocked_bindings(
       req_perform = mock_http_error(403),
       .package = "httr2",
-      lds_download_metadata(slug = "slug", api_key = "api_key"),
+      lds_download_metadata(slug = "abcde", api_key = "api_key"),
     ),
     "You do not have permission to see this dataset"
   )
@@ -151,7 +151,7 @@ testthat::test_that("error in http response", {
     testthat::with_mocked_bindings(
       req_perform = mock_http_error(403),
       .package = "httr2",
-      lds_download_metadata(slug = "slug", api_key = NULL),
+      lds_download_metadata(slug = "abcde", api_key = NULL),
     ),
     "This is a private dataset, please provide an API key"
   )

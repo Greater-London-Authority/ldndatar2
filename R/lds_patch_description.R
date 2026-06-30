@@ -14,7 +14,7 @@
 #' @importFrom httr2 request req_method req_headers req_body_json req_perform resp_check_status
 #' @export
 lds_patch_description <- function(slug, patch, api_key) {
-  checkmate::assert_string(slug)
+  checkmate::assert_string(slug, n.chars = 5L)
   checkmate::assert_string(api_key)
   checkmate::assert_string(patch)
 
