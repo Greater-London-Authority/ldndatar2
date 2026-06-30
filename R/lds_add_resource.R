@@ -5,8 +5,7 @@
 #' Datastore. Requires an API key with write access.
 #'
 #' @param file_path Path to the file to upload.
-#' @param slug URL slug of the dataset –
-#'   `https://data.london.gov.uk/dataset/<slug>`.
+#' @param slug URL slug of the dataset - `https://data.london.gov.uk/dataset/<slug>`.
 #' @param api_key London Datastore API key (required for write operations).
 #' @param res_title Resource title. If `NULL`, the file name is used.
 #'   Default: `NULL`.
@@ -24,7 +23,7 @@
 #' \dontrun{
 #' lds_add_resource(
 #'   file_path = "data/my_data.csv",
-#'   slug = "my-dataset",
+#'   slug = "2o8xw",
 #'   api_key = Sys.getenv("LDS_API_KEY"),
 #'   res_title = "My Data CSV",
 #'   description = "Monthly counts of things"
@@ -33,7 +32,7 @@
 #'
 #' @export
 #' @rdname lds_add_resource
-#' @importFrom checkmate assert_file_exists assert_string assert_date
+#' @importFrom checkmate assert_file_exists assert_string
 #' @importFrom glue glue
 #' @importFrom stringr str_extract
 #' @importFrom dplyr pull filter
@@ -50,7 +49,7 @@ lds_add_resource <- function(
 ) {
   # ---- Input validation ----
   checkmate::assert_file_exists(file_path)
-  checkmate::assert_string(slug, min.chars = 1L)
+  checkmate::assert_string(slug, n.chars = 5L)
   checkmate::assert_string(api_key, min.chars = 1L)
   checkmate::assert_string(res_title, null.ok = TRUE, min.chars = 1L)
   checkmate::assert_string(description, null.ok = TRUE)

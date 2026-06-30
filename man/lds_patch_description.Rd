@@ -2,7 +2,7 @@
 % Please edit documentation in R/lds_patch_description.R
 \name{lds_patch_description}
 \alias{lds_patch_description}
-\title{lds_patch_description}
+\title{Patch a dataset description}
 \usage{
 lds_patch_description(slug, patch, api_key)
 }
@@ -17,7 +17,7 @@ lds_patch_description(slug, patch, api_key)
 A response object
 }
 \description{
-Updates description page of an existing dataset on the London Datastore/.
+Updates the description page of an existing dataset on the London Datastore.
 }
 \examples{
 \dontrun{

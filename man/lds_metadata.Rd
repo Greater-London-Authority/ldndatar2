@@ -2,12 +2,12 @@
 % Please edit documentation in R/lds_metadata.R
 \name{lds_metadata}
 \alias{lds_metadata}
-\title{lds_metadata}
+\title{Fetch Datastore metadata}
 \usage{
 lds_metadata(type = "resources")
 }
 \arguments{
-\item{type}{\if{html}{\out{<character>}} The type of meta data to be returned "resources", "datasets", "teams" or "topics"}
+\item{type}{A character, the metadata to return: "resources", "datasets", "teams" or "topics"}
 }
 \value{
 A dataframe.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/lds_download_metadata.R
 \name{lds_download_metadata}
 \alias{lds_download_metadata}
-\title{lds_download_metadata}
+\title{Download dataset metadata}
 \usage{
 lds_download_metadata(slug, api_key = NULL, inc_tables = FALSE)
 }

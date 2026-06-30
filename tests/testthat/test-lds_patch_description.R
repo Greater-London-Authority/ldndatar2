@@ -19,24 +19,24 @@ test_that("slug must be a string", {
 
 test_that("patch must be a string", {
   expect_error(
-    lds_patch_description(slug = "s", patch = 123, api_key = "k"),
+    lds_patch_description(slug = "abcde", patch = 123, api_key = "k"),
     "patch"
   )
 
   expect_error(
-    lds_patch_description(slug = "s", patch = NULL, api_key = "k"),
+    lds_patch_description(slug = "abcde", patch = NULL, api_key = "k"),
     "patch"
   )
 })
 
 test_that("api_key must be a string", {
   expect_error(
-    lds_patch_description(slug = "s", patch = "p", api_key = 123),
+    lds_patch_description(slug = "abcde", patch = "p", api_key = 123),
     "api_key"
   )
 
   expect_error(
-    lds_patch_description(slug = "s", patch = "p", api_key = NULL),
+    lds_patch_description(slug = "abcde", patch = "p", api_key = NULL),
     "api_key"
   )
 })
@@ -53,11 +53,11 @@ httptest2::without_internet({
     # against the request body, so the matcher is one contiguous slice.
     httptest2::expect_PATCH(
       lds_patch_description(
-        slug = "my-slug",
+        slug = "abcde",
         patch = "<p>new description</p>",
         api_key = "api-key-123"
       ),
-      "https://data.london.gov.uk/api/dataset/my-slug",
+      "https://data.london.gov.uk/api/dataset/abcde",
       '[{"op":"replace","path":"/description","value":"<p>new description'
     )
   })

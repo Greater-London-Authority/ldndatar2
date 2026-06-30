@@ -2,14 +2,14 @@
 % Please edit documentation in R/lds_description_render.R
 \name{lds_description_render}
 \alias{lds_description_render}
-\title{lds_description_render}
+\title{Render a description file to Datastore HTML}
 \usage{
 lds_description_render(input, include_title = FALSE, ...)
 }
 \arguments{
 \item{input}{The input file to be rendered. This can be an R script (.R), an R Markdown document (.Rmd), or a plain markdown document.}
 
-\item{include_title}{Include the YAML title in the output, Default: TRUE}
+\item{include_title}{Include the YAML title in the output, Default: FALSE}
 
 \item{...}{Other parameters passed to rmarkdown::render}
 }
@@ -17,7 +17,7 @@ lds_description_render(input, include_title = FALSE, ...)
 By default will return the rendered html string.
 }
 \description{
-Render the input file to html suitable to be used in the description field of a dataset on the London DataStore.
+Render the input file to html suitable to be used in the description field of a dataset on the London Datastore.
 }
 \details{
 A markdown version of the input file is also rendered and saved.

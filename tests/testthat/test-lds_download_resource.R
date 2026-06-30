@@ -38,17 +38,17 @@ test_that("slug rejects NA", {
 
 test_that("res_title must be NULL or a string", {
   expect_error(
-    lds_download_resource(slug = "test-dataset", res_title = 123),
+    lds_download_resource(slug = "abcde", res_title = 123),
     "res_title"
   )
 
   expect_error(
-    lds_download_resource(slug = "test-dataset", res_title = TRUE),
+    lds_download_resource(slug = "abcde", res_title = TRUE),
     "res_title"
   )
 
   expect_error(
-    lds_download_resource(slug = "test-dataset", res_title = c("a", "b")),
+    lds_download_resource(slug = "abcde", res_title = c("a", "b")),
     "res_title"
   )
 })
@@ -57,17 +57,17 @@ test_that("res_title must be NULL or a string", {
 
 test_that("res_id must be NULL or a string", {
   expect_error(
-    lds_download_resource(slug = "test-dataset", res_id = 123),
+    lds_download_resource(slug = "abcde", res_id = 123),
     "res_id"
   )
 
   expect_error(
-    lds_download_resource(slug = "test-dataset", res_id = TRUE),
+    lds_download_resource(slug = "abcde", res_id = TRUE),
     "res_id"
   )
 
   expect_error(
-    lds_download_resource(slug = "test-dataset", res_id = c("a", "b")),
+    lds_download_resource(slug = "abcde", res_id = c("a", "b")),
     "res_id"
   )
 })
@@ -76,17 +76,17 @@ test_that("res_id must be NULL or a string", {
 
 test_that("api_key must be NULL or a string", {
   expect_error(
-    lds_download_resource(slug = "test-dataset", api_key = 123),
+    lds_download_resource(slug = "abcde", api_key = 123),
     "api_key"
   )
 
   expect_error(
-    lds_download_resource(slug = "test-dataset", api_key = TRUE),
+    lds_download_resource(slug = "abcde", api_key = TRUE),
     "api_key"
   )
 
   expect_error(
-    lds_download_resource(slug = "test-dataset", api_key = c("a", "b")),
+    lds_download_resource(slug = "abcde", api_key = c("a", "b")),
     "api_key"
   )
 })
@@ -96,7 +96,7 @@ test_that("api_key must be NULL or a string", {
 test_that("valid inputs pass validation and reach the HTTP layer", {
   httptest2::without_internet({
     expect_error(
-      lds_download_resource(slug = "nonexistent-slug-xyz-999"),
+      lds_download_resource(slug = "abcde"),
       class = "httptest2_request"
     )
   })
@@ -134,7 +134,7 @@ testthat::test_that("filters to correct resource by title", {
       req_perform = function(...) invisible(NULL),
       .package = "httr2",
       result <- lds_download_resource(
-        slug = "slug",
+        slug = "abcde",
         res_title = "report.pdf",
         dir = tempdir()
       )
