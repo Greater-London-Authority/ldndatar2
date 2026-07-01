@@ -9,7 +9,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/Greater-London-Authority/ldndatar2/blob/dev/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/Greater-London-Authority/ldndatar2/blob/main/DESCRIPTION)
 
 Slade M, Bahia I (2026). *ldndatar2: Access London Datastore Data and
 Resources*. R package version 0.0.0.9001,
