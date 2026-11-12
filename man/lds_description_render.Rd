@@ -19,9 +19,6 @@ By default will return the rendered html string.
 \description{
 Render the input file to html suitable to be used in the description field of a dataset on the London Datastore.
 }
-\details{
-A markdown version of the input file is also rendered and saved.
-}
 \examples{
 \dontrun{
 lds_description_render(input = "my_description.Rmd")

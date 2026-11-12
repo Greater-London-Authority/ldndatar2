@@ -21,7 +21,7 @@ Updates the description page of an existing dataset on the London Datastore.
 }
 \examples{
 \dontrun{
-new_description <- lds_description_render("datastore_description.Rmd", save_html = FALSE)
+new_description <- lds_description_render("datastore_description.Rmd")
 lds_patch_description(slug = "2o8xw", patch = new_description, api_key = Sys.getenv("LDS_API_KEY"))
 }
 }

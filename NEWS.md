@@ -17,3 +17,9 @@
 * `lds_delete_resource()` and `lds_replace_resource()` look the resource up
   on the dataset itself, with the API key, rather than in the public resource
   export. Resources on private datasets were always reported as not found.
+
+* `lds_description_render()` renders into a directory of its own and reads
+  the file `rmarkdown::render()` returns. It globbed every `.html` file in
+  the session's temp directory, so a second call, or any other html file
+  there, made it fail. The output is read as UTF-8, and `include_title` is
+  checked as a single flag.

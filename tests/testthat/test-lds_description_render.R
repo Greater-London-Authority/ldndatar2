@@ -22,15 +22,6 @@ test_that("input must have an allowed extension", {
 # Render a tiny Rmd file with a YAML title (so rmarkdown emits a <title> tag)
 # and headings, then check fix_html_title strips the right things.
 # rmarkdown::render requires pandoc; skip cleanly if it's not available.
-#
-# NOTE: lds_description_render() uses the shared tempdir() and globs *.html
-# from it, so consecutive calls in the same R session collide. We clear stale
-# .html files before each render as a workaround. This is a latent bug in the
-# function, output should be confined to a per-call subdirectory.
-
-clean_html_tempdir <- function() {
-  unlink(list.files(tempdir(), pattern = "\\.html$", full.names = TRUE))
-}
 
 make_test_rmd <- function() {
   path <- withr::local_tempfile(.local_envir = parent.frame(), fileext = ".Rmd")
@@ -54,7 +45,6 @@ make_test_rmd <- function() {
 
 test_that("include_title = FALSE strips <title>, <h1> and <h2>", {
   skip_if_not(rmarkdown::pandoc_available(), "pandoc not available")
-  clean_html_tempdir()
 
   rmd <- make_test_rmd()
 
@@ -69,7 +59,6 @@ test_that("include_title = FALSE strips <title>, <h1> and <h2>", {
 
 test_that("include_title = TRUE strips <title> but keeps <h1>/<h2>", {
   skip_if_not(rmarkdown::pandoc_available(), "pandoc not available")
-  clean_html_tempdir()
 
   rmd <- make_test_rmd()
 
@@ -79,4 +68,41 @@ test_that("include_title = TRUE strips <title> but keeps <h1>/<h2>", {
   expect_true(grepl("<h1", html))
   expect_true(grepl("<h2", html))
   expect_true(grepl("Some body text", html))
+})
+
+test_that("other html files in the session tempdir are not picked up", {
+  skip_if_not(rmarkdown::pandoc_available(), "pandoc not available")
+
+  stale <- file.path(tempdir(), "stale.html")
+  writeLines("<p>Stale file</p>", stale)
+  withr::defer(unlink(stale))
+
+  rmd <- make_test_rmd()
+
+  html <- lds_description_render(input = rmd)
+
+  expect_length(html, 1)
+  expect_true(grepl("Some body text", html))
+  expect_false(grepl("Stale file", html))
+})
+
+test_that("non-ASCII text survives as UTF-8", {
+  skip_if_not(rmarkdown::pandoc_available(), "pandoc not available")
+
+  rmd <- withr::local_tempfile(fileext = ".Rmd")
+  writeLines(enc2utf8("Costs \u00a3100 per caf\u00e9."), rmd, useBytes = TRUE)
+
+  html <- lds_description_render(input = rmd)
+
+  expect_true(grepl(enc2utf8("\u00a3100 per caf\u00e9"), html, fixed = TRUE))
+})
+
+test_that("include_title must be a single TRUE or FALSE", {
+  rmd <- withr::local_tempfile(fileext = ".Rmd")
+  writeLines("Some body text.", rmd)
+
+  expect_error(
+    lds_description_render(input = rmd, include_title = "yes"),
+    "include_title"
+  )
 })
