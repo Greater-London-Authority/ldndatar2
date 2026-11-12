@@ -134,9 +134,12 @@ extract_team_metadata <- function(res) {
 
   output <- do.call(rbind, rows)
 
-  if (nrow(output) == 0) {
+  if (is.null(output) || nrow(output) == 0) {
     stop("Bad JSON, check input.")
   }
 
-  return(output[!duplicated(output), ])
+  output <- output[!duplicated(output), ]
+  rownames(output) <- NULL
+
+  return(output)
 }
