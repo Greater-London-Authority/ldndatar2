@@ -32,13 +32,7 @@ lds_delete_resource <- function(slug, resource_name, resource_id, api_key) {
   checkmate::assert_string(resource_id)
   checkmate::assert_string(api_key)
 
-  all_resources <- lds_metadata(type = "resources")
-
-  resource <- all_resources[
-    all_resources$dataset_id == slug &
-      all_resources$title == resource_name &
-      all_resources$id == resource_id,
-  ]
+  resource <- find_resource(slug, resource_name, resource_id, api_key)
 
   if (nrow(resource) == 0) {
     stop("Resource not found.")
@@ -78,4 +72,30 @@ lds_delete_resource <- function(slug, resource_name, resource_id, api_key) {
     stop("Invalid option.")
   }
   invisible(response)
+}
+
+#' Find a resource on a dataset
+#'
+#' Looks the resource up in the dataset's own metadata, using the API key, so
+#' resources on private datasets are found too.
+#'
+#' @param slug URL slug of the dataset.
+#' @param resource_name The resource title.
+#' @param resource_id The resource id.
+#' @param api_key London Datastore API key.
+#' @return The matching rows of the dataset metadata, possibly none.
+#' @noRd
+find_resource <- function(slug, resource_name, resource_id, api_key) {
+  meta_data <- lds_download_metadata(slug, api_key)
+
+  if (!all(c("resource_id", "resource_title") %in% names(meta_data))) {
+    return(meta_data[0, ])
+  }
+
+  meta_data[
+    which(
+      meta_data$resource_id == resource_id &
+        meta_data$resource_title == resource_name
+    ),
+  ]
 }

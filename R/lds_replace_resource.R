@@ -45,12 +45,7 @@ lds_replace_resource <- function(
   checkmate::assert_string(api_key)
 
   # Check that the resource exists
-  all_metadata <- lds_metadata(type = "resources")
-  resource_metadata <- all_metadata[
-    all_metadata$dataset_id == slug &
-      all_metadata$title == resource_name &
-      all_metadata$id == resource_id,
-  ]
+  resource_metadata <- find_resource(slug, resource_name, resource_id, api_key)
 
   if (nrow(resource_metadata) == 0) {
     stop("Resource not found, check inputs.")
@@ -58,7 +53,7 @@ lds_replace_resource <- function(
 
   # Check the names of the files match, if they don't user should use add / remove functionality
   file_name <- basename(file_path)
-  datastore_file_name <- resource_metadata$title
+  datastore_file_name <- resource_metadata$resource_title
 
   if (file_name != datastore_file_name) {
     stop("File names don't match, use `lds_add_resource` or check file name.")

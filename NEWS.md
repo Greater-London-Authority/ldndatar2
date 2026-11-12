@@ -13,3 +13,7 @@
 * `lds_patch_description()` sends `updatedAt` as a UTC ISO 8601 timestamp.
   It sent local time with no zone, so it was an hour out during BST. It also
   now returns the response invisibly, as documented.
+
+* `lds_delete_resource()` and `lds_replace_resource()` look the resource up
+  on the dataset itself, with the API key, rather than in the public resource
+  export. Resources on private datasets were always reported as not found.
