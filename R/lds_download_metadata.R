@@ -11,7 +11,7 @@
 #' @return A tibble of metadata
 #' @export
 #' @import dplyr
-#' @importFrom checkmate assert_string assert_logical
+#' @importFrom checkmate assert_string assert_flag
 #' @importFrom glue glue
 #' @importFrom rlang is_empty
 #' @importFrom httr2 request req_headers req_perform resp_status resp_body_json
@@ -20,11 +20,12 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
   # Checkmate type checks
   checkmate::assert_string(slug, n.chars = 5L)
   checkmate::assert_string(api_key, null.ok = TRUE)
-  checkmate::assert_logical(inc_tables)
+  checkmate::assert_flag(inc_tables)
 
   dataset_url <- glue::glue("{lds_url_api}dataset/{slug}")
 
-  req <- httr2::request(dataset_url)
+  req <- httr2::request(dataset_url) |>
+    httr2::req_error(is_error = function(resp) FALSE)
 
   if (!is.null(api_key)) {
     req <- req |>
@@ -45,6 +46,8 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
     }
   } else if (resp_status == 404) {
     stop("This dataset does not exist")
+  } else {
+    stop(glue::glue("Failed to download metadata (HTTP {resp_status})."))
   }
 
   for (sublist in c("resources", "shares", "readonly")) {
