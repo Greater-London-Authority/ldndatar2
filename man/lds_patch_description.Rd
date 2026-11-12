@@ -14,7 +14,7 @@ lds_patch_description(slug, patch, api_key)
 \item{api_key}{A character. London Datastore API key - needed to amend a dataset.}
 }
 \value{
-A response object
+The response to the last request (invisibly).
 }
 \description{
 Updates the description page of an existing dataset on the London Datastore.

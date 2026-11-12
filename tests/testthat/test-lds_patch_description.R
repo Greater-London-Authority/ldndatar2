@@ -62,3 +62,31 @@ httptest2::without_internet({
     )
   })
 })
+
+test_that("updatedAt is patched with a UTC timestamp, not local time", {
+  sent <- list()
+  capture_request <- function(req) {
+    sent[[length(sent) + 1]] <<- req
+    httr2::response(status_code = 200)
+  }
+
+  resp <- httr2::with_mocked_responses(
+    capture_request,
+    lds_patch_description(
+      slug = "abcde",
+      patch = "<p>new description</p>",
+      api_key = "api-key-123"
+    )
+  )
+
+  expect_length(sent, 2)
+
+  updated <- httr2::req_get_body(sent[[2]])[[1]]
+  expect_equal(updated$path, "/updatedAt")
+  expect_match(
+    updated$value,
+    "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+  )
+
+  expect_s3_class(resp, "httr2_response")
+})

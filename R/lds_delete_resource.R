@@ -63,8 +63,7 @@ lds_delete_resource <- function(slug, resource_name, resource_id, api_key) {
       ) |>
       httr2::req_body_json(list(list(
         op = "remove",
-        path = paste0("/resources/", resource_id),
-        value = Sys.time()
+        path = paste0("/resources/", resource_id)
       ))) |>
       httr2::req_perform()
 

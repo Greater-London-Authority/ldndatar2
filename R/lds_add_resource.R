@@ -151,12 +151,12 @@ lds_add_resource <- function(
 }
 
 
-# ---- Internal helper: PATCH dataset updated_at timestamp ----
+# ---- Internal helper: PATCH dataset updatedAt timestamp ----
 
 #' Update a dataset's "updated at" timestamp
 #'
-#' Sends a PATCH request to the London Datastore API to set the dataset's
-#' `updated_at` field to the current time.
+#' Sends a JSON Patch request to the London Datastore API to set the dataset's
+#' `updatedAt` field to the current time.
 #'
 #' @param slug URL slug of the dataset.
 #' @param api_key London Datastore API key.
@@ -166,12 +166,17 @@ lds_add_resource <- function(
 lds_patch_dataset_timestamp <- function(slug, api_key) {
   patch_url <- glue::glue("{lds_url_api}dataset/{slug}")
 
-  patch_body <- list(
-    updated_at = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z")
-  )
+  patch_body <- list(list(
+    op = "replace",
+    path = "/updatedAt",
+    value = lds_timestamp()
+  ))
 
   response <- httr2::request(patch_url) |>
-    httr2::req_headers(Authorization = api_key) |>
+    httr2::req_headers(
+      Authorization = api_key,
+      "Content-Type" = "application/json-patch+json"
+    ) |>
     httr2::req_method("PATCH") |>
     httr2::req_body_json(patch_body) |>
     httr2::req_error(is_error = function(resp) FALSE) |>
@@ -181,12 +186,20 @@ lds_patch_dataset_timestamp <- function(slug, api_key) {
 
   if (resp_status >= 400) {
     warning(
-      glue::glue(
-        "Failed to update dataset timestamp (HTTP {resp_status}). ",
-        "The resource was added successfully."
-      )
+      glue::glue("Failed to update dataset timestamp (HTTP {resp_status}).")
     )
   }
 
   invisible(response)
+}
+
+#' Current time in the Datastore's timestamp format
+#'
+#' Formats the current time as an ISO 8601 UTC string with milliseconds,
+#' matching the `updatedAt` values the Datastore stores.
+#'
+#' @return A character string, e.g. "2026-06-15T14:26:41.323Z".
+#' @noRd
+lds_timestamp <- function() {
+  format(Sys.time(), "%Y-%m-%dT%H:%M:%OS3Z", tz = "UTC")
 }
