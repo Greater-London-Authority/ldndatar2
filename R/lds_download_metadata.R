@@ -10,7 +10,6 @@
 #' @param inc_tables whether to include data on any tables in the dataset, Default: FALSE
 #' @return A tibble of metadata
 #' @export
-#' @import dplyr
 #' @importFrom checkmate assert_string assert_flag
 #' @importFrom glue glue
 #' @importFrom rlang is_empty
