@@ -27,3 +27,6 @@
 * `lds_download_resource()` checks that `dir` exists before downloading,
   gives a clear error for a dataset with no resources, and documents that it
   returns the path of the downloaded file.
+
+* `lds_add_resource()` takes the default resource title from `basename()`,
+  so Windows paths with backslashes give the file name, not the whole path.

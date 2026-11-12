@@ -338,3 +338,33 @@ testthat::test_that("calls that should raise errors / warning ", {
     "Failed to add resource \\(HTTP 500\\): Internal Server Error"
   )
 })
+
+testthat::test_that("default title is the file's base name", {
+  sent <- NULL
+  capture_request <- function(req) {
+    sent <<- req
+    httr2::response(
+      status_code = 200,
+      headers = list(`Content-Type` = "application/json"),
+      body = charToRaw('{"id": "r_new"}')
+    )
+  }
+
+  tmp <- withr::local_tempfile(pattern = "monthly_counts", fileext = ".csv")
+  writeLines("a,b\n1,2", tmp)
+
+  testthat::with_mocked_bindings(
+    lds_download_metadata = function(...) mock_metadata,
+    httr2::with_mocked_responses(
+      capture_request,
+      lds_add_resource(
+        file_path = tmp,
+        slug = "abcde",
+        api_key = "api_key",
+        update_timestamp = FALSE
+      )
+    )
+  )
+
+  testthat::expect_equal(httr2::req_get_body(sent)$title, basename(tmp))
+})

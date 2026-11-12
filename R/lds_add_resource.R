@@ -34,7 +34,6 @@
 #' @rdname lds_add_resource
 #' @importFrom checkmate assert_file_exists assert_string
 #' @importFrom glue glue
-#' @importFrom stringr str_extract
 #' @importFrom dplyr pull filter
 #' @importFrom rlang .data
 lds_add_resource <- function(
@@ -84,7 +83,7 @@ lds_add_resource <- function(
 
   # ---- Derive resource title from file name if not provided ----
   if (is.null(res_title)) {
-    res_title <- stringr::str_extract(file_path, "[^/]+$")
+    res_title <- basename(file_path)
   }
 
   # Warn if a resource with this title already exists

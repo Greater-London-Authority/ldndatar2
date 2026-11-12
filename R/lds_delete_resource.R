@@ -10,7 +10,7 @@
 #' @param resource_id A character, the resource id.
 #' @param api_key London Datastore API key (required for write operations).
 #'
-#' @return The parsed JSON response from the API (invisibly).
+#' @return The httr2 response (invisibly).
 #'
 #' @examples
 #' \dontrun{

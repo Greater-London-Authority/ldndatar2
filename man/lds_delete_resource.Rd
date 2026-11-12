@@ -16,7 +16,7 @@ lds_delete_resource(slug, resource_name, resource_id, api_key)
 \item{api_key}{London Datastore API key (required for write operations).}
 }
 \value{
-The parsed JSON response from the API (invisibly).
+The httr2 response (invisibly).
 }
 \description{
 Deletes a resource (file) on the London Datastore dataset.

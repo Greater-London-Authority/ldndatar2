@@ -11,14 +11,14 @@ lds_replace_resource(file_path, slug, resource_name, resource_id, api_key)
 
 \item{slug}{URL slug of the dataset - \verb{https://data.london.gov.uk/dataset/<slug>}.}
 
-\item{resource_name}{A character - the name of the file to be deleted.}
+\item{resource_name}{A character - the name of the file to be replaced.}
 
 \item{resource_id}{A character, the resource id.}
 
 \item{api_key}{London Datastore API key (required for write operations).}
 }
 \value{
-The parsed JSON response from the API (invisibly).
+The httr2 response (invisibly).
 }
 \description{
 Replaces a resource (file) in the London Datastore dataset.

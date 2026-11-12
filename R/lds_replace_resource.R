@@ -9,11 +9,11 @@
 #'
 #' @param file_path A character - path where file to replace is located.
 #' @param slug URL slug of the dataset - `https://data.london.gov.uk/dataset/<slug>`.
-#' @param resource_name A character - the name of the file to be deleted.
+#' @param resource_name A character - the name of the file to be replaced.
 #' @param resource_id A character, the resource id.
 #' @param api_key London Datastore API key (required for write operations).
 #'
-#' @return The parsed JSON response from the API (invisibly).
+#' @return The httr2 response (invisibly).
 #'
 #' @examples
 #' \dontrun{
