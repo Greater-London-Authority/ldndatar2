@@ -1,7 +1,13 @@
 testthat::test_that("Test html title fixer, add operation...", {
-  input <- "<title>This is the title</title><h1>This is another title</h1><p>This is some text in a paragraph.</p><p>And this is another paraph.</p>"
+  input <- paste0(
+    "<title>This is the title</title><h1>This is another title</h1>",
+    "<p>This is some text in a paragraph.</p><p>And this is another paraph.</p>"
+  )
 
-  expected_output <- "<h1>This is another title</h1><p>This is some text in a paragraph.</p><p>And this is another paraph.</p>"
+  expected_output <- paste0(
+    "<h1>This is another title</h1>",
+    "<p>This is some text in a paragraph.</p><p>And this is another paraph.</p>"
+  )
 
   output <- fix_html_title(input_html = input, operation = "add")
 

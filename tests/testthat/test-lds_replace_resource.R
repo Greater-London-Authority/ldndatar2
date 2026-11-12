@@ -63,11 +63,11 @@ testthat::test_that("lds_replace_resource stops when resource not found", {
   writeLines("a,b\n1,2", tmp)
 
   testthat::with_mocked_bindings(
-    lds_metadata = function(type) {
+    lds_download_metadata = function(...) {
       data.frame(
-        dataset_id = "abcde",
-        id = "res-001",
-        title = "my-resource.csv",
+        id = "abcde",
+        resource_id = "res-001",
+        resource_title = "my-resource.csv",
         stringsAsFactors = FALSE
       )
     },
@@ -90,7 +90,15 @@ testthat::test_that("lds_replace_resource stops when file names don't match", {
   tmp <- withr::local_tempfile(fileext = ".csv")
   writeLines("a,b\n1,2", tmp)
 
-  httptest2::with_mock_api({
+  testthat::with_mocked_bindings(
+    lds_download_metadata = function(...) {
+      data.frame(
+        id = "abcde",
+        resource_id = "res-001",
+        resource_title = "different-name.csv",
+        stringsAsFactors = FALSE
+      )
+    },
     testthat::expect_error(
       lds_replace_resource(
         file_path = tmp,
@@ -99,9 +107,9 @@ testthat::test_that("lds_replace_resource stops when file names don't match", {
         resource_id = "res-001",
         api_key = "key-123"
       ),
-      "Resource not found, check inputs."
+      "File names don't match"
     )
-  })
+  )
 })
 
 testthat::test_that("lds_replace_resource aborts when user answers 2", {
@@ -109,11 +117,11 @@ testthat::test_that("lds_replace_resource aborts when user answers 2", {
   writeLines("a,b\n1,2", tmp)
 
   testthat::with_mocked_bindings(
-    lds_metadata = function(type) {
+    lds_download_metadata = function(...) {
       data.frame(
-        dataset_id = "abcde",
-        id = "res-001",
-        title = "my-resource.csv",
+        id = "abcde",
+        resource_id = "res-001",
+        resource_title = "my-resource.csv",
         stringsAsFactors = FALSE
       )
     },
@@ -144,11 +152,11 @@ testthat::test_that("lds_replace_resource stops on invalid confirmation input", 
   httptest2::with_mock_api({
     testthat::expect_error(
       testthat::with_mocked_bindings(
-        lds_metadata = function(type) {
+        lds_download_metadata = function(...) {
           data.frame(
-            dataset_id = "abcde",
-            id = "res-001",
-            title = basename(tmp),
+            id = "abcde",
+            resource_id = "res-001",
+            resource_title = basename(tmp),
             stringsAsFactors = FALSE
           )
         },
@@ -175,9 +183,9 @@ httptest2::with_mock_api({
 
   mock_metadata <- function(...) {
     data.frame(
-      dataset_id = "vd4q4",
-      id = "7yw",
-      title = "another_file.txt",
+      id = "vd4q4",
+      resource_id = "7yw",
+      resource_title = "another_file.txt",
       stringsAsFactors = FALSE
     )
   }
@@ -186,7 +194,7 @@ httptest2::with_mock_api({
     httptest2::expect_POST(
       testthat::with_mocked_bindings(
         readline = function(...) "1",
-        lds_metadata = mock_metadata,
+        lds_download_metadata = mock_metadata,
         lds_replace_resource(
           file_path = tmp,
           slug = "vd4q4",
@@ -202,11 +210,11 @@ httptest2::with_mock_api({
     testthat::expect_error(
       testthat::with_mocked_bindings(
         readline = function(...) "1",
-        lds_metadata = function(...) {
+        lds_download_metadata = function(...) {
           data.frame(
-            dataset_id = "vd4q4",
-            id = "7yw",
-            title = "another_file.txt",
+            id = "vd4q4",
+            resource_id = "7yw",
+            resource_title = "another_file.txt",
             stringsAsFactors = FALSE
           )
         },

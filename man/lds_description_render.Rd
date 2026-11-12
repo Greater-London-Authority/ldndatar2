@@ -7,7 +7,8 @@
 lds_description_render(input, include_title = FALSE, ...)
 }
 \arguments{
-\item{input}{The input file to be rendered. This can be an R script (.R), an R Markdown document (.Rmd), or a plain markdown document.}
+\item{input}{The input file to be rendered. This can be an R script (.R), an R
+Markdown document (.Rmd), or a plain markdown document.}
 
 \item{include_title}{Include the YAML title in the output, Default: FALSE}
 
@@ -17,10 +18,8 @@ lds_description_render(input, include_title = FALSE, ...)
 By default will return the rendered html string.
 }
 \description{
-Render the input file to html suitable to be used in the description field of a dataset on the London Datastore.
-}
-\details{
-A markdown version of the input file is also rendered and saved.
+Render the input file to html suitable to be used in the description
+field of a dataset on the London Datastore.
 }
 \examples{
 \dontrun{

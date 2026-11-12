@@ -48,7 +48,7 @@ fetch_tabular_metadata <- function(type) {
     ) |>
     janitor::clean_names(case = "snake")
 
-  return(meta_data)
+  meta_data
 }
 
 #' @title fetch_team_metadata
@@ -59,7 +59,7 @@ fetch_team_metadata <- function() {
 
   output <- extract_team_metadata(res)
 
-  return(output)
+  output
 }
 
 #' @title fetch_topic_metadata
@@ -70,7 +70,7 @@ fetch_topic_metadata <- function() {
 
   output <- extract_topic_metadata(res)
 
-  return(output)
+  output
 }
 
 #' @title fetch_all_api_metadata
@@ -90,7 +90,7 @@ fetch_all_api_metadata <- function() {
 
   httr2::resp_check_status(res)
 
-  return(httr2::resp_body_json(res))
+  httr2::resp_body_json(res)
 }
 
 #' @title extract_topic_metadata
@@ -116,7 +116,7 @@ extract_topic_metadata <- function(res) {
 
   rownames(output) <- NULL
 
-  return(output)
+  output
 }
 
 #' @title extract_team_metadata
@@ -134,9 +134,12 @@ extract_team_metadata <- function(res) {
 
   output <- do.call(rbind, rows)
 
-  if (nrow(output) == 0) {
+  if (is.null(output) || nrow(output) == 0) {
     stop("Bad JSON, check input.")
   }
 
-  return(output[!duplicated(output), ])
+  output <- output[!duplicated(output), ]
+  rownames(output) <- NULL
+
+  output
 }

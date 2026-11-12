@@ -1,9 +1,9 @@
 httptest2::with_mock_api({
   mock_metadata <- function(...) {
     data.frame(
-      dataset_id = "vd4q4",
-      id = "cxm",
-      title = "text.txt",
+      id = "vd4q4",
+      resource_id = "cxm",
+      resource_title = "text.txt",
       stringsAsFactors = FALSE
     )
   }
@@ -12,7 +12,7 @@ httptest2::with_mock_api({
     httptest2::expect_PATCH(
       testthat::with_mocked_bindings(
         readline = function(...) "1",
-        lds_metadata = mock_metadata,
+        lds_download_metadata = mock_metadata,
         lds_patch_dataset_timestamp = function(...) invisible(NULL),
         lds_delete_resource(
           slug = "vd4q4",
@@ -29,7 +29,7 @@ httptest2::with_mock_api({
     testthat::expect_error(
       testthat::with_mocked_bindings(
         readline = function(...) "2",
-        lds_metadata = mock_metadata,
+        lds_download_metadata = mock_metadata,
         lds_delete_resource(
           slug = "vd4q4",
           resource_name = "text.txt",
@@ -44,11 +44,11 @@ httptest2::with_mock_api({
   testthat::test_that("errors when resource is not found", {
     testthat::expect_error(
       testthat::with_mocked_bindings(
-        lds_metadata = function(...) {
+        lds_download_metadata = function(...) {
           data.frame(
-            dataset_id = "wrong-slug",
-            id = "cxm",
-            title = "text.txt",
+            id = "vd4q4",
+            resource_id = "other",
+            resource_title = "text.txt",
             stringsAsFactors = FALSE
           )
         },
@@ -67,7 +67,7 @@ httptest2::with_mock_api({
     testthat::expect_error(
       testthat::with_mocked_bindings(
         readline = function(...) "99",
-        lds_metadata = mock_metadata,
+        lds_download_metadata = mock_metadata,
         lds_delete_resource(
           slug = "vd4q4",
           resource_name = "text.txt",
@@ -78,4 +78,50 @@ httptest2::with_mock_api({
       "Invalid option."
     )
   })
+})
+
+testthat::test_that("looks the resource up on the dataset with the api key", {
+  called_with <- NULL
+
+  testthat::expect_error(
+    testthat::with_mocked_bindings(
+      readline = function(...) "2",
+      lds_download_metadata = function(slug, api_key, ...) {
+        called_with <<- list(slug = slug, api_key = api_key)
+        data.frame(
+          id = "vd4q4",
+          sharing = "private",
+          resource_id = "cxm",
+          resource_title = "text.txt",
+          stringsAsFactors = FALSE
+        )
+      },
+      lds_delete_resource(
+        slug = "vd4q4",
+        resource_name = "text.txt",
+        resource_id = "cxm",
+        api_key = "api_key"
+      )
+    ),
+    "Deletion aborted."
+  )
+
+  testthat::expect_equal(called_with, list(slug = "vd4q4", api_key = "api_key"))
+})
+
+testthat::test_that("errors when the dataset has no resources", {
+  testthat::expect_error(
+    testthat::with_mocked_bindings(
+      lds_download_metadata = function(...) {
+        data.frame(id = "vd4q4", title = "Empty", stringsAsFactors = FALSE)
+      },
+      lds_delete_resource(
+        slug = "vd4q4",
+        resource_name = "text.txt",
+        resource_id = "cxm",
+        api_key = "api_key"
+      )
+    ),
+    "Resource not found."
+  )
 })

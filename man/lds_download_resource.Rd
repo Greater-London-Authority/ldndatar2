@@ -24,7 +24,7 @@ lds_download_resource(
 \item{api_key}{London Datastore API key, only needed for private datasets, Default: NULL}
 }
 \value{
-A URL string of the resource
+The path of the downloaded file (invisibly).
 }
 \description{
 Downloads resource using URL for a specified resource.

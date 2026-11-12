@@ -86,8 +86,8 @@ test_that("valid inputs pass validation and reach the HTTP layer", {
 # ---- Happy path against a mocked response ----
 #
 # Exercises the post-fetch parsing pipeline: resources flattening, full_join,
-# and date coercion. Fixture lives at
-# tests/testthat/data.london.gov.uk/api/dataset/abcde.json
+# and date coercion. The fixture is abcde.json under
+# data.london.gov.uk/api/dataset in this folder.
 
 httptest2::with_mock_api({
   test_that("returns a tibble with top-level + per-resource rows", {
@@ -154,5 +154,60 @@ testthat::test_that("error in http response", {
       lds_download_metadata(slug = "abcde", api_key = NULL),
     ),
     "This is a private dataset, please provide an API key"
+  )
+})
+
+# ---- Error statuses through httr2's own error handling ----
+#
+# Mocking the response rather than req_perform() keeps httr2's error handling
+# in the path, so these fail if a 4xx is raised before our own messages.
+
+testthat::test_that("http errors reach the package's own messages", {
+  mock_status <- function(status) {
+    function(req) httr2::response(status_code = status)
+  }
+
+  httr2::with_mocked_responses(
+    mock_status(403),
+    testthat::expect_error(
+      lds_download_metadata(slug = "abcde"),
+      "This is a private dataset, please provide an API key"
+    )
+  )
+
+  httr2::with_mocked_responses(
+    mock_status(403),
+    testthat::expect_error(
+      lds_download_metadata(slug = "abcde", api_key = "api_key"),
+      "You do not have permission to see this dataset"
+    )
+  )
+
+  httr2::with_mocked_responses(
+    mock_status(404),
+    testthat::expect_error(
+      lds_download_metadata(slug = "abcde"),
+      "This dataset does not exist"
+    )
+  )
+
+  httr2::with_mocked_responses(
+    mock_status(500),
+    testthat::expect_error(
+      lds_download_metadata(slug = "abcde"),
+      "Failed to download metadata \\(HTTP 500\\)"
+    )
+  )
+})
+
+test_that("inc_tables must be a single TRUE or FALSE", {
+  expect_error(
+    lds_download_metadata(slug = "abcde", inc_tables = NA),
+    "inc_tables"
+  )
+
+  expect_error(
+    lds_download_metadata(slug = "abcde", inc_tables = c(TRUE, FALSE)),
+    "inc_tables"
   )
 })

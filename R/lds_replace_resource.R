@@ -9,11 +9,11 @@
 #'
 #' @param file_path A character - path where file to replace is located.
 #' @param slug URL slug of the dataset - `https://data.london.gov.uk/dataset/<slug>`.
-#' @param resource_name A character - the name of the file to be deleted.
+#' @param resource_name A character - the name of the file to be replaced.
 #' @param resource_id A character, the resource id.
 #' @param api_key London Datastore API key (required for write operations).
 #'
-#' @return The parsed JSON response from the API (invisibly).
+#' @return The httr2 response (invisibly).
 #'
 #' @examples
 #' \dontrun{
@@ -45,12 +45,7 @@ lds_replace_resource <- function(
   checkmate::assert_string(api_key)
 
   # Check that the resource exists
-  all_metadata <- lds_metadata(type = "resources")
-  resource_metadata <- all_metadata[
-    all_metadata$dataset_id == slug &
-      all_metadata$title == resource_name &
-      all_metadata$id == resource_id,
-  ]
+  resource_metadata <- find_resource(slug, resource_name, resource_id, api_key)
 
   if (nrow(resource_metadata) == 0) {
     stop("Resource not found, check inputs.")
@@ -58,7 +53,7 @@ lds_replace_resource <- function(
 
   # Check the names of the files match, if they don't user should use add / remove functionality
   file_name <- basename(file_path)
-  datastore_file_name <- resource_metadata$title
+  datastore_file_name <- resource_metadata$resource_title
 
   if (file_name != datastore_file_name) {
     stop("File names don't match, use `lds_add_resource` or check file name.")
@@ -93,5 +88,5 @@ lds_replace_resource <- function(
 }
 
 # Require for mocking base functions, from `testthat` docs
-# https://testthat.r-lib.org/articles/mocking.html#:~:text=That%20means%20if%20you%20want,doesn't%20affect%20ordinary%20calls.
+# https://testthat.r-lib.org/articles/mocking.html
 readline <- NULL

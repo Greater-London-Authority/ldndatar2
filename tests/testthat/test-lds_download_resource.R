@@ -143,3 +143,27 @@ testthat::test_that("filters to correct resource by title", {
 
   testthat::expect_equal(result, file.path(tempdir(), "report.pdf"))
 })
+
+test_that("dir must be an existing directory", {
+  expect_error(
+    lds_download_resource(slug = "abcde", dir = "totally/nonexistent/dir"),
+    "dir"
+  )
+})
+
+testthat::test_that("a dataset with no resources gives a clear error", {
+  testthat::expect_error(
+    testthat::with_mocked_bindings(
+      lds_download_metadata = function(...) {
+        data.frame(
+          id = "idxxx",
+          title = "Empty dataset",
+          sharing = "public",
+          stringsAsFactors = FALSE
+        )
+      },
+      lds_download_resource(slug = "abcde", dir = tempdir())
+    ),
+    "This dataset has no resources"
+  )
+})
