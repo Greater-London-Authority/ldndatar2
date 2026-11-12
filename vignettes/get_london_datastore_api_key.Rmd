@@ -140,10 +140,10 @@ Or to add a new resource to a dataset you own:
 
 ```{r}
 lds_add_resource(
-  slug    = "your-dataset-slug",
-  path    = "path/to/your-file.csv",
-  title   = "Your resource title",
-  api_key = Sys.getenv("LDS_API_KEY")
+  file_path = "path/to/your-file.csv",
+  slug      = "your-dataset-slug",
+  api_key   = Sys.getenv("LDS_API_KEY"),
+  res_title = "Your resource title"
 )
 ```
 
