@@ -7,7 +7,7 @@
 #' @param res_title The title of the resource, Default: NULL
 #' @param res_id The ID of the resource, Default: NULL
 #' @param api_key London Datastore API key, only needed for private datasets, Default: NULL
-#' @return A URL string of the resource
+#' @return The path of the downloaded file (invisibly).
 #' @export
 lds_download_resource <- function(
   slug,
@@ -18,6 +18,7 @@ lds_download_resource <- function(
 ) {
   # Input validation
   checkmate::assert_string(slug, n.chars = 5L)
+  checkmate::assert_directory_exists(dir)
   checkmate::assert_string(res_title, null.ok = TRUE)
   checkmate::assert_string(res_id, null.ok = TRUE)
   checkmate::assert_string(api_key, null.ok = TRUE)
@@ -26,9 +27,16 @@ lds_download_resource <- function(
   meta_data <- lds_download_metadata(slug, api_key)
   private_dataset <- any(unique(meta_data$sharing) %in% c("private", "draft"))
 
+  if (!"resource_id" %in% names(meta_data)) {
+    stop("This dataset has no resources")
+  }
+
+  if ("order" %in% names(meta_data)) {
+    meta_data <- dplyr::arrange(meta_data, .data$order)
+  }
+
   # Filter metadata based on res_title and res_id
   res_data <- meta_data |>
-    dplyr::arrange(.data$order) |>
     (\(df) {
       if (!is.null(res_title)) {
         dplyr::filter(df, .data$resource_title == res_title)

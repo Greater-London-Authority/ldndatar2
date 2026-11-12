@@ -23,3 +23,7 @@
   the session's temp directory, so a second call, or any other html file
   there, made it fail. The output is read as UTF-8, and `include_title` is
   checked as a single flag.
+
+* `lds_download_resource()` checks that `dir` exists before downloading,
+  gives a clear error for a dataset with no resources, and documents that it
+  returns the path of the downloaded file.
