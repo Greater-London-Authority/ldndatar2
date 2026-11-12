@@ -75,5 +75,5 @@ lds_download_resource <- function(
 
   httr2::req_perform(req, path = path)
 
-  return(invisible(path))
+  invisible(path)
 }

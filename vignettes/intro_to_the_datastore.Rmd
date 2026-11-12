@@ -83,7 +83,9 @@ ordered_metada <- metadata[
     na.last = NA
   ),
 ]
+```
 
+```
 # A tibble: 11,323 × 15
 #>   dataset_id dataset id                webpage title format permalink url   temporal_coverage_from temporal_coverage_to check_timestamp
 #>   <chr>      <chr>   <chr>             <chr>   <chr> <chr>  <chr>     <chr> <date>                 <date>               <dttm>

@@ -148,7 +148,7 @@ lds_download_metadata <- function(slug, api_key = NULL, inc_tables = FALSE) {
     }
   }
 
-  return(dplyr::as_tibble(meta_data))
+  dplyr::as_tibble(meta_data)
 }
 
 ### Utility functions for the lds_metadatset function.
@@ -159,5 +159,5 @@ remove_null_list <- function(l) {
       l[[item]] <- NULL
     }
   }
-  return(l)
+  l
 }

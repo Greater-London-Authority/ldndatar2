@@ -88,5 +88,5 @@ lds_replace_resource <- function(
 }
 
 # Require for mocking base functions, from `testthat` docs
-# https://testthat.r-lib.org/articles/mocking.html#:~:text=That%20means%20if%20you%20want,doesn't%20affect%20ordinary%20calls.
+# https://testthat.r-lib.org/articles/mocking.html
 readline <- NULL

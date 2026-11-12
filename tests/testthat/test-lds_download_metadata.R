@@ -86,8 +86,8 @@ test_that("valid inputs pass validation and reach the HTTP layer", {
 # ---- Happy path against a mocked response ----
 #
 # Exercises the post-fetch parsing pipeline: resources flattening, full_join,
-# and date coercion. Fixture lives at
-# tests/testthat/data.london.gov.uk/api/dataset/abcde.json
+# and date coercion. The fixture is abcde.json under
+# data.london.gov.uk/api/dataset in this folder.
 
 httptest2::with_mock_api({
   test_that("returns a tibble with top-level + per-resource rows", {

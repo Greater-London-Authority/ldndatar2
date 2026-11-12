@@ -1,6 +1,8 @@
 #' @title Render a description file to Datastore HTML
-#' @description Render the input file to html suitable to be used in the description field of a dataset on the London Datastore.
-#' @param input The input file to be rendered. This can be an R script (.R), an R Markdown document (.Rmd), or a plain markdown document.
+#' @description Render the input file to html suitable to be used in the description
+#'   field of a dataset on the London Datastore.
+#' @param input The input file to be rendered. This can be an R script (.R), an R
+#'   Markdown document (.Rmd), or a plain markdown document.
 #' @param include_title Include the YAML title in the output, Default: FALSE
 #' @param ... Other parameters passed to rmarkdown::render
 #' @return By default will return the rendered html string.
@@ -46,7 +48,7 @@ lds_description_render <- function(
     output <- fix_html_title(input_html = html, operation = "remove")
   }
 
-  return(output)
+  output
 }
 
 #' @title fix_html_title
@@ -66,5 +68,5 @@ fix_html_title <- function(input_html, operation) {
     html <- gsub("<h1(.*?)</h1>", "", html)
   }
 
-  return(html)
+  html
 }

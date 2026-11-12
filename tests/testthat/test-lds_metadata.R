@@ -60,8 +60,8 @@ test_that("default type is 'resources'", {
 # ---- Mocked API responses (teams / topics) ----
 #
 # These types route through fetch_all_api_metadata() which uses httr2, so
-# httptest2::with_mock_api() can intercept the request and serve the fixture at
-# tests/testthat/data.london.gov.uk/api/v3/datasets/export.json.
+# httptest2::with_mock_api() can intercept the request and serve the fixture,
+# export.json under data.london.gov.uk/api/v3/datasets in this folder.
 
 httptest2::with_mock_api({
   test_that("type 'teams' returns a data frame from mocked response", {
